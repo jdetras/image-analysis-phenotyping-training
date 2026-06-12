@@ -374,6 +374,20 @@ children.push(table(
 ));
 children.push(p("Open-source-first: where teams already license commercial tools, the common equivalents are Pix4D / Agisoft Metashape (→ COLMAP/Meshroom + QGIS) and MATLAB + Image Processing Toolbox (→ scikit-image / OpenCV). These are noted but not used in practicals.", { italics: true }));
 
+children.push(h2("Apple Silicon & MLX (Mac alternative to PyTorch)"));
+children.push(p("On Apple Silicon (M-series) Macs the whole stack installs and runs natively as arm64, and PyTorch automatically uses the Metal (MPS) GPU — the Day-4 practical works out of the box."));
+children.push(p("Optionally, add MLX, Apple's array/ML framework. On Apple Silicon it runs on the GPU via Metal with unified memory and is often faster than PyTorch-MPS for training small CNNs from scratch — a good alternative for the Day-4 classification task. YOLO and SAM stay on PyTorch (which uses MPS), so MLX is an alternative for the CNN-training portion, not a whole-stack replacement. Install it with:"));
+[
+  "./setup.sh --with-mlx   (offered automatically on Apple Silicon)",
+  "pip install -r env/requirements-mac-mlx.txt   (into your activated env)",
+].forEach((line) =>
+  children.push(new Paragraph({
+    shading: { fill: "F1F5F2", type: ShadingType.CLEAR }, spacing: { after: 0 }, indent: { left: 120 },
+    children: [new TextRun({ text: line, font: "Consolas", size: 20 })],
+  })));
+children.push(spacer());
+children.push(p("Apple Silicon only — there are no MLX wheels for Intel Macs, and MLX has no Metal GPU inside Docker on a Mac, so use the native install. The verifier confirms it with a line like “[ ok ] MLX works (default device: Device(gpu, 0))”.", { italics: true }));
+
 children.push(h2("Hardware requirements"));
 children.push(table(
   [2360, 3500, 3500],

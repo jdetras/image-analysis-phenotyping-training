@@ -9,15 +9,17 @@
 #      (or a pip virtualenv from env/requirements.txt with --use-venv)
 #   4. runs notebooks/00_check_environment.py to verify the install
 #   5. (optional) pre-downloads model weights (YOLO + SAM) for offline use
-#   6. (optional) installs/points to the GUI applications
-#   7. (optional) fetches a small starter dataset
+#   6. (optional, Apple Silicon) installs MLX as an alternative to PyTorch
+#   7. (optional) installs/points to the GUI applications
+#   8. (optional) fetches a small starter dataset
 #
 # Usage:
-#   ./setup.sh                 # env + verify (the common case)
+#   ./setup.sh                 # env + verify (offers MLX on Apple Silicon)
 #   ./setup.sh --with-weights  # also pre-download YOLO + SAM weights
+#   ./setup.sh --with-mlx      # also install MLX (Apple Silicon Macs only)
 #   ./setup.sh --gui           # also try to install GUI apps via brew/apt
 #   ./setup.sh --with-data     # also clone a small starter dataset
-#   ./setup.sh --all           # env + weights + gui + data
+#   ./setup.sh --all           # env + weights + mlx + gui + data
 #   ./setup.sh --use-venv      # use python venv + pip instead of conda
 #   ./setup.sh --yes           # don't prompt; assume "yes" to installs
 #   ./setup.sh --help
@@ -34,18 +36,20 @@ cd "$SCRIPT_DIR"
 ENV_NAME="phenotyping"
 ENV_FILE="env/environment.yml"
 REQ_FILE="env/requirements.txt"
+MLX_REQ="env/requirements-mac-mlx.txt"
 CHECK_SCRIPT="notebooks/00_check_environment.py"
 WEIGHTS_DIR="models"
 DATA_DIR="data"
 
 # --- flags ---
-DO_WEIGHTS=0; DO_GUI=0; DO_DATA=0; USE_VENV=0; ASSUME_YES=0
+DO_WEIGHTS=0; DO_GUI=0; DO_DATA=0; USE_VENV=0; ASSUME_YES=0; DO_MLX=0
 for arg in "$@"; do
   case "$arg" in
     --with-weights) DO_WEIGHTS=1 ;;
+    --with-mlx)     DO_MLX=1 ;;
     --gui)          DO_GUI=1 ;;
     --with-data)    DO_DATA=1 ;;
-    --all)          DO_WEIGHTS=1; DO_GUI=1; DO_DATA=1 ;;
+    --all)          DO_WEIGHTS=1; DO_GUI=1; DO_DATA=1; DO_MLX=1 ;;
     --use-venv)     USE_VENV=1 ;;
     --yes|-y)       ASSUME_YES=1 ;;
     --help|-h)
@@ -74,7 +78,7 @@ ask()  { # ask "question" -> returns 0 for yes
 have() { command -v "$1" >/dev/null 2>&1; }
 
 # =============================================================================
-step "1/6  Detecting platform"
+step "1/8  Detecting platform"
 OS="$(uname -s)"; ARCH="$(uname -m)"
 case "$OS" in
   Darwin) PLATFORM="MacOSX" ;;
@@ -82,13 +86,18 @@ case "$OS" in
   *) err "Unsupported OS: $OS. Use WSL2/Git Bash on Windows, or follow setup.html."; exit 1 ;;
 esac
 ok "OS: $OS ($ARCH)"
+APPLE_SILICON=0
+if [ "$OS" = "Darwin" ] && [ "$ARCH" = "arm64" ]; then
+  APPLE_SILICON=1
+  ok "Apple Silicon detected — native arm64; MLX is available as an alternative to PyTorch."
+fi
 [ -f "$ENV_FILE" ] || { err "Run this from the repo root (missing $ENV_FILE)."; exit 1; }
 
 # =============================================================================
 # venv path (alternative to conda)
 # =============================================================================
 if [ "$USE_VENV" -eq 1 ]; then
-  step "2/6  Creating a Python virtualenv (pip path)"
+  step "2/8  Creating a Python virtualenv (pip path)"
   have python3 || { err "python3 not found. Install Python 3.10+ first."; exit 1; }
   PYV="$(python3 -c 'import sys;print("%d.%d"%sys.version_info[:2])')"
   ok "python3 $PYV"
@@ -99,17 +108,17 @@ if [ "$USE_VENV" -eq 1 ]; then
   fi
   # shellcheck disable=SC1091
   source .venv/bin/activate
-  step "3/6  Installing requirements (this can take several minutes)"
+  step "3/8  Installing requirements (this can take several minutes)"
   python -m pip install --upgrade pip >/dev/null
   python -m pip install -r "$REQ_FILE"
   ok "pip install complete"
-  step "4/6  Verifying the environment"
+  step "4/8  Verifying the environment"
   python "$CHECK_SCRIPT" || warn "Some packages failed to import — see messages above."
   ACTIVATE_HINT="source .venv/bin/activate"
   PYRUN=(python)
 else
   # ===========================================================================
-  step "2/6  Ensuring conda / mamba is available"
+  step "2/8  Ensuring conda / mamba is available"
   if ! have conda; then
     warn "No conda found."
     if ask "Install Miniforge (conda + mamba) into \$HOME/miniforge3?"; then
@@ -138,7 +147,7 @@ else
   ok "Using $SOLVER ($(conda --version))"
 
   # ===========================================================================
-  step "3/6  Creating/updating the '$ENV_NAME' environment (several minutes)"
+  step "3/8  Creating/updating the '$ENV_NAME' environment (several minutes)"
   if conda env list | awk '{print $1}' | grep -qx "$ENV_NAME"; then
     warn "Env '$ENV_NAME' exists — updating it to match $ENV_FILE."
     "$SOLVER" env update -n "$ENV_NAME" -f "$ENV_FILE" --prune
@@ -149,14 +158,14 @@ else
   conda activate "$ENV_NAME"
 
   # ===========================================================================
-  step "4/6  Verifying the environment"
+  step "4/8  Verifying the environment"
   python "$CHECK_SCRIPT" || warn "Some packages failed to import — see messages above."
   ACTIVATE_HINT="conda activate $ENV_NAME"
   PYRUN=(python)
 fi
 
 # =============================================================================
-step "5/6  Optional model weights"
+step "5/8  Optional model weights"
 if [ "$DO_WEIGHTS" -eq 1 ]; then
   mkdir -p "$WEIGHTS_DIR"
   # YOLO — let ultralytics fetch + cache its own checkpoint, then copy it here
@@ -192,7 +201,31 @@ else
 fi
 
 # =============================================================================
-step "6/6  GUI applications & starter data"
+step "6/8  Apple Silicon / MLX (optional alternative to PyTorch)"
+if [ "$APPLE_SILICON" -eq 1 ]; then
+  RUN_MLX=0
+  if [ "$DO_MLX" -eq 1 ]; then
+    RUN_MLX=1
+  elif [ "$ASSUME_YES" -eq 0 ] && ask "Install MLX, a Metal-accelerated alternative to PyTorch for Day 4?"; then
+    RUN_MLX=1
+  fi
+  if [ "$RUN_MLX" -eq 1 ]; then
+    if "${PYRUN[@]}" -m pip install -r "$MLX_REQ"; then
+      ok "MLX installed. The verifier will confirm it runs on the Metal GPU."
+    else
+      warn "MLX install failed — see messages above. PyTorch (MPS) still works."
+    fi
+  else
+    warn "Skipped MLX (install later with: ./setup.sh --with-mlx)."
+  fi
+elif [ "$DO_MLX" -eq 1 ]; then
+  warn "MLX is Apple-Silicon-only; skipping on $OS ($ARCH). Use PyTorch here."
+else
+  warn "Not an Apple Silicon Mac — MLX not applicable; PyTorch is your DL framework."
+fi
+
+# =============================================================================
+step "7/8  GUI applications & starter data"
 GUI_LINKS=(
   "Fiji/ImageJ      https://fiji.sc/"
   "ilastik          https://www.ilastik.org/download"

@@ -18,6 +18,7 @@ open-source-first toolchain, deliverable in-person or hybrid.
 | `assets/style.css` | Shared stylesheet (light/dark aware) |
 | `env/environment.yml` | Conda environment for all practicals |
 | `env/requirements.txt` | pip fallback (virtualenv / Google Colab) |
+| `env/requirements-mac-mlx.txt` | Apple Silicon extras — MLX, optional alternative to PyTorch |
 | `notebooks/00_check_environment.py` | Verifies the install; usable in CI |
 | `.nojekyll` | Tells GitHub Pages to serve HTML as-is (no Jekyll build) |
 | `setup.sh` | One-shot installer: Miniforge → env → verify → (opt) weights/GUI/data |
@@ -61,6 +62,20 @@ python notebooks/00_check_environment.py      # every required line should read 
 No conda? Use a virtualenv with `env/requirements.txt` (or `./setup.sh --use-venv`),
 or run on free Google Colab GPUs. Full instructions are on the **Setup** page.
 On Windows, run `setup.sh` under WSL2 or Git Bash, or follow the manual steps.
+
+**Apple Silicon (M-series Mac).** Everything installs natively as arm64, and
+PyTorch uses the Metal (MPS) GPU automatically. You can optionally add
+[MLX](https://github.com/ml-explore/mlx) — Apple's Metal-accelerated framework —
+as an alternative to PyTorch for Day-4 CNN training:
+
+```bash
+./setup.sh --with-mlx          # offered automatically on Apple Silicon
+# or: pip install -r env/requirements-mac-mlx.txt   (into your activated env)
+```
+
+MLX is Apple-Silicon-only and needs the **native** install — Docker on a Mac has
+no Metal GPU. The verifier confirms it with a line like
+`[ ok ] MLX 0.31.2 works (default device: Device(gpu, 0))`.
 
 ## Run with Docker (no local Python needed)
 

@@ -12,6 +12,7 @@ so it can also be used in CI.
 from __future__ import annotations
 
 import importlib
+import platform
 import sys
 
 # (import name, friendly name) — pip/conda names differ from import names.
@@ -57,6 +58,38 @@ def check(packages, *, required: bool) -> list[str]:
     return failures
 
 
+def check_apple_silicon() -> None:
+    """On Apple Silicon, report MPS and the optional MLX alternative."""
+    is_mac = platform.system() == "Darwin"
+    is_arm = platform.machine() == "arm64"
+    if not (is_mac and is_arm):
+        return  # nothing Apple-Silicon-specific to report
+
+    print("\nApple Silicon check:")
+    print("  [ ok  ] Apple Silicon (arm64) detected — packages run natively.")
+    try:
+        import mlx.core as mx
+
+        # tiny compute to confirm MLX actually works, and report its device
+        result = mx.add(mx.array([1.0, 2.0]), mx.array([3.0, 4.0]))
+        mx.eval(result)
+        version = getattr(mx, "__version__", None)
+        if version is None:
+            import importlib.metadata as _md
+            try:
+                version = _md.version("mlx")
+            except Exception:  # noqa: BLE001
+                version = "unknown"
+        print(f"  [ ok  ] MLX {version} works (default device: {mx.default_device()}).")
+        print("          Optional alternative to PyTorch for Day-4 CNN training.")
+    except ImportError:
+        print("  [ info] MLX not installed (optional). For a Metal-accelerated "
+              "alternative to")
+        print("          PyTorch on Day 4, run:  ./setup.sh --with-mlx")
+    except Exception as exc:  # noqa: BLE001 - MLX present but misbehaving
+        print(f"  [ info] MLX is installed but a smoke test failed: {exc}")
+
+
 def main() -> int:
     print(f"Python {sys.version.split()[0]} at {sys.executable}\n")
 
@@ -79,6 +112,8 @@ def main() -> int:
                   "use Google Colab for the Day-4 deep-learning practical.")
     except Exception as exc:  # noqa: BLE001
         print(f"  [ info] Could not query PyTorch for a GPU: {exc}")
+
+    check_apple_silicon()
 
     if failures:
         print(f"\nFAILED: {len(failures)} required package(s) missing: "

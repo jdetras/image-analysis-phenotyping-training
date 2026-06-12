@@ -45,6 +45,19 @@ cd image-analysis-phenotyping-training
 docker compose up --build      # first build takes a while (multi-GB)</code></pre>
     <p>Then open <a href="http://localhost:8888/lab?token=phenotyping">http://localhost:8888/lab?token=phenotyping</a>. The repo is mounted into the container, so your notebooks and data persist on the host, and the port is bound to <code>127.0.0.1</code> only.</p>
     <div class="callout"><strong>Scope.</strong> The container covers Days 1–4 and the Open3D parts of Day 5. The desktop GUI apps (Fiji, ilastik, CloudCompare, Meshroom, QGIS) are installed on the host — see the tables below. The image already ships a CUDA-enabled PyTorch build (it runs CPU-only until a GPU is exposed) — for a local NVIDIA GPU you only need the NVIDIA Container Toolkit and the <code>deploy</code> block in <code>docker-compose.yml</code>, no rebuild. Colab GPUs work too. See the repository README for details.</div>
+    <div class="callout warn"><strong>On an Apple Silicon Mac?</strong> The image runs natively on arm64, but Docker Desktop runs a Linux VM with <em>no</em> access to the Mac's Metal GPU — so MPS and MLX acceleration are unavailable inside the container. For accelerated Day-4 work on a Mac, use the native install below (conda or venv), not Docker.</div>
+  </section>
+
+  <section id="apple-silicon">
+    <h2>Apple Silicon &amp; MLX (Mac alternative to PyTorch)</h2>
+    <p>On Apple Silicon (M-series) Macs the whole stack installs and runs <strong>natively as arm64</strong> — no Rosetta needed. PyTorch automatically uses the <strong>MPS</strong> (Metal) backend for GPU acceleration, so the Day-4 deep-learning practical works out of the box.</p>
+    <p>As an <strong>optional alternative</strong>, you can add <a href="https://github.com/ml-explore/mlx">MLX</a>, Apple's own array/ML framework. On Apple Silicon it runs on the GPU via Metal with unified memory, and is often faster than PyTorch-MPS for training small CNNs from scratch — a nice option for the Day-4 classification task. YOLO and SAM stay on PyTorch (which uses MPS), so MLX is an alternative for the <em>CNN-training portion</em>, not a whole-stack replacement.</p>
+    <p>The installer offers MLX automatically when it detects an Apple Silicon Mac, or you can request it explicitly:</p>
+    <pre><code>./setup.sh --with-mlx
+# or, into an environment you already activated:
+pip install -r env/requirements-mac-mlx.txt</code></pre>
+    <p>The verifier reports it: a successful line reads <code>[ ok ] MLX 0.31.2 works (default device: Device(gpu, 0))</code>.</p>
+    <div class="callout"><strong>Apple Silicon only.</strong> There are no MLX wheels for Intel Macs; on Intel Mac, Linux, or Windows, stick with PyTorch. And as noted above, MLX needs the <em>native</em> install — it has no Metal GPU inside Docker on a Mac.</div>
   </section>
 
   <section>
