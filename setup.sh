@@ -225,7 +225,7 @@ else
 fi
 
 # =============================================================================
-step "7/8  GUI applications & starter data"
+step "7/8  GUI applications"
 GUI_LINKS=(
   "Fiji/ImageJ      https://fiji.sc/"
   "ilastik          https://www.ilastik.org/download"
@@ -263,8 +263,9 @@ else
   printf '       %s\n' "${GUI_LINKS[@]}"
 fi
 
+# =============================================================================
+step "8/8  Starter dataset"
 if [ "$DO_DATA" -eq 1 ]; then
-  step "    Starter dataset"
   mkdir -p "$DATA_DIR"
   if [ -d "$DATA_DIR/PlantVillage-Dataset" ]; then
     ok "PlantVillage dataset already cloned."
@@ -274,6 +275,8 @@ if [ "$DO_DATA" -eq 1 ]; then
   else
     warn "Skipped. Other datasets (CVPPP, GWHD, Pheno4D) require registration — see resources.html."
   fi
+else
+  warn "Skipped (pass --with-data to clone the PlantVillage starter dataset)."
 fi
 
 # =============================================================================
