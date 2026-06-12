@@ -1,0 +1,51 @@
+# Image Analysis for Plant Phenotyping — conda environment
+#
+# Create:   conda env create -f environment.yml   (or: mamba env create -f environment.yml)
+# Activate: conda activate phenotyping
+# Verify:   python ../notebooks/00_check_environment.py
+#
+# Notes:
+#  - Installs the CPU build of PyTorch by default so it works on any laptop.
+#    For an NVIDIA GPU, follow https://pytorch.org/get-started/locally/ to
+#    install the matching CUDA build AFTER creating this environment.
+#  - GUI applications (Fiji, ilastik, CloudCompare, QGIS, Meshroom) are
+#    installed separately — see setup.html. COLMAP can be installed via conda
+#    (see the commented line below) or as a standalone app.
+name: phenotyping
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  # --- core scientific stack ---
+  - numpy
+  - scipy
+  - pandas
+  - matplotlib
+  - seaborn
+  - jupyterlab
+  - ipywidgets
+  # --- image processing ---
+  - scikit-image
+  - opencv
+  - imageio
+  - tifffile
+  # --- classical machine learning ---
+  - scikit-learn
+  # --- interactive viewers ---
+  - napari
+  - pyqt
+  # --- 3D / point clouds (optional via conda; also available on pip) ---
+  # - colmap            # uncomment on Linux/macOS to get COLMAP from conda-forge
+  - pip
+  - pip:
+      # PlantCV — plant phenotyping pipeline toolkit
+      - plantcv
+      # PyTorch (CPU build). Replace with a CUDA build for GPU — see note above.
+      - torch
+      - torchvision
+      # YOLO object detection / counting
+      - ultralytics
+      # Segment Anything Model (promptable segmentation)
+      - segment-anything
+      # 3D point-cloud processing
+      - open3d

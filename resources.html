@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resources — Image Analysis for Plant Phenotyping</title>
+<meta name="description" content="Datasets, references, and license information for the Image Analysis for Plant Phenotyping course.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <div class="brand">Image Analysis for <span>Plant Phenotyping</span></div>
+    <nav class="main">
+      <a href="index.html">Overview</a>
+      <a href="syllabus.html">Programme</a>
+      <a href="setup.html">Setup</a>
+      <a href="resources.html" class="active">Resources</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+
+  <section id="datasets">
+    <h2>Datasets</h2>
+    <p>Open phenotyping datasets used in demos and available for practicals. Always check each dataset's own license and citation requirements before reuse or redistribution.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Dataset</th><th>Used for</th><th>Source</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Computer Vision Problems in Plant Phenotyping (CVPPP)</strong> — leaf segmentation &amp; counting</td><td>Day 2–4: segmentation, counting</td><td><a href="https://www.plant-phenotyping.org/datasets">plant-phenotyping.org/datasets</a></td></tr>
+          <tr><td><strong>PlantVillage</strong> — leaf disease images</td><td>Day 3–4: classification</td><td><a href="https://github.com/spMohanty/PlantVillage-Dataset">github.com/spMohanty/PlantVillage-Dataset</a></td></tr>
+          <tr><td><strong>Global Wheat Head Detection (GWHD)</strong></td><td>Day 4: detection &amp; counting</td><td><a href="http://www.global-wheat.com/">global-wheat.com</a></td></tr>
+          <tr><td><strong>PlantCV tutorial datasets</strong></td><td>Day 2: classical pipelines</td><td><a href="https://plantcv.readthedocs.io/en/stable/tutorials/">plantcv.readthedocs.io</a></td></tr>
+          <tr><td><strong>Pheno4D</strong> — 4D plant point clouds</td><td>Day 5: 3D processing</td><td><a href="https://www.ipb.uni-bonn.de/data/pheno4d/">ipb.uni-bonn.de/data/pheno4d</a></td></tr>
+          <tr><td><strong>Your own images</strong></td><td>Capstone</td><td>Bring a small set on Day 1</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout"><strong>Bandwidth tip.</strong> Hosts should mirror the chosen datasets to a local drive before the course — several are multi-GB and venue Wi-Fi rarely copes with 20 people downloading at once.</div>
+  </section>
+
+  <section id="references">
+    <h2>Key references &amp; further reading</h2>
+    <ul>
+      <li>Gehan et al. (2017), <em>PlantCV v2: Image analysis software for high-throughput plant phenotyping.</em> PeerJ. <a href="https://doi.org/10.7717/peerj.4088">doi:10.7717/peerj.4088</a></li>
+      <li>van der Walt et al. (2014), <em>scikit-image: image processing in Python.</em> PeerJ. <a href="https://doi.org/10.7717/peerj.453">doi:10.7717/peerj.453</a></li>
+      <li>Kirillov et al. (2023), <em>Segment Anything.</em> ICCV. <a href="https://arxiv.org/abs/2304.02643">arXiv:2304.02643</a></li>
+      <li>David et al. (2020), <em>Global Wheat Head Detection (GWHD) dataset.</em> Plant Phenomics. <a href="https://doi.org/10.34133/2020/3521852">doi:10.34133/2020/3521852</a></li>
+      <li>Minervini et al. (2016), <em>Finely-grained annotated datasets for image-based plant phenotyping.</em> Pattern Recognition Letters. <a href="https://doi.org/10.1016/j.patrec.2015.10.013">doi:10.1016/j.patrec.2015.10.013</a></li>
+      <li>Paulus (2019), <em>Measuring crops in 3D: using geometry for plant phenotyping.</em> Plant Methods. <a href="https://doi.org/10.1186/s13007-019-0490-0">doi:10.1186/s13007-019-0490-0</a></li>
+    </ul>
+  </section>
+
+  <section id="licenses">
+    <h2>Licensing</h2>
+    <h3>Course materials</h3>
+    <p>The text, slides, notebooks, and this site are released under <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 (CC BY 4.0)</a> — reuse and adapt freely with attribution. The example code in this repository is additionally available under the <a href="https://opensource.org/license/mit/">MIT License</a>.</p>
+    <h3>Referenced software</h3>
+    <p>Every tool retains its own license, summarised on the <a href="setup.html#stack">Setup</a> page. A few warrant attention for organisations:</p>
+    <ul>
+      <li><strong>Ultralytics YOLO</strong> is <strong>AGPL-3.0</strong>. That is fine for training, research, and teaching, but using it inside a closed-source product can trigger copyleft obligations — Ultralytics sells a commercial license for that case. Evaluate before embedding it in proprietary pipelines.</li>
+      <li><strong>Fiji, ilastik, CloudCompare, QGIS</strong> are GPL-family — free to use and share; modifications you distribute must stay open.</li>
+      <li><strong>SAM, Open3D, PlantCV, scikit-image, scikit-learn, PyTorch, OpenCV</strong> are permissive (Apache-2.0 / BSD / MIT) — minimal restrictions.</li>
+    </ul>
+    <div class="callout warn"><strong>Not legal advice.</strong> License summaries here are provided in good faith for planning. Confirm current terms on each project's site before redistributing software or building commercial products.</div>
+  </section>
+
+  <section id="hosting">
+    <h2>Hosting this site</h2>
+    <p>This is a static site — no build step, no server-side code. To publish it on GitHub Pages:</p>
+    <ol>
+      <li>Create a GitHub repository and push this folder to it (see the repository <code>README.md</code> for the exact commands).</li>
+      <li>In the repo, go to <strong>Settings → Pages</strong>.</li>
+      <li>Set <strong>Source</strong> to <em>Deploy from a branch</em>, branch <code>main</code>, folder <code>/ (root)</code>.</li>
+      <li>Save. Your site goes live at <code>https://&lt;user&gt;.github.io/&lt;repo&gt;/</code> within a minute or two.</li>
+    </ol>
+    <p>The <code>.nojekyll</code> file tells GitHub Pages to serve the HTML as-is without running Jekyll, so there is nothing to break.</p>
+  </section>
+
+</div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p>Course materials licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. <a href="index.html">Back to overview</a>.</p>
+  </div>
+</footer>
+</body>
+</html>

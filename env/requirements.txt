@@ -1,0 +1,45 @@
+# Image Analysis for Plant Phenotyping — pip fallback (e.g. Google Colab)
+#
+# In a fresh virtualenv or a Colab cell:
+#   python -m venv .venv && source .venv/bin/activate   # local only; skip on Colab
+#   pip install -r requirements.txt
+#
+# Colab already ships numpy/scipy/pandas/matplotlib/scikit-learn and a CUDA
+# build of PyTorch, so on Colab you typically only need:
+#   pip install plantcv ultralytics segment-anything open3d napari
+#
+# For a GPU PyTorch build locally, install torch/torchvision from
+# https://pytorch.org/get-started/locally/ instead of the lines below.
+
+# --- core scientific stack ---
+numpy
+scipy
+pandas
+matplotlib
+seaborn
+jupyterlab
+ipywidgets
+
+# --- image processing ---
+scikit-image
+opencv-python
+imageio
+tifffile
+
+# --- classical machine learning ---
+scikit-learn
+
+# --- plant phenotyping ---
+plantcv
+
+# --- deep learning ---
+torch
+torchvision
+ultralytics
+segment-anything
+
+# --- interactive viewer (optional locally; not used in headless Colab) ---
+napari[all]
+
+# --- 3D / point clouds ---
+open3d

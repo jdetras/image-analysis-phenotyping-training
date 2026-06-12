@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Programme — Image Analysis for Plant Phenotyping</title>
+<meta name="description" content="Full 5-day day-by-day schedule for the Image Analysis for Plant Phenotyping intensive course.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <div class="brand">Image Analysis for <span>Plant Phenotyping</span></div>
+    <nav class="main">
+      <a href="index.html">Overview</a>
+      <a href="syllabus.html" class="active">Programme</a>
+      <a href="setup.html">Setup</a>
+      <a href="resources.html">Resources</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+
+  <section>
+    <h2>5-day programme</h2>
+    <p>Each day runs roughly <strong>09:00–16:30</strong> with a morning lecture/demo block, a long lunch, and an afternoon practical. Times are indicative — adjust to your timezone and breaks. Click a day to expand.</p>
+    <div class="callout">
+      <strong>Cross-cutting thread.</strong> Every afternoon carries the same <em>imaging, data &amp; practicals</em> theme: you work with real images, version your data, and write down what you did. By Friday you have a reproducible mini-pipeline of your own.
+    </div>
+  </section>
+
+  <section>
+
+    <details class="day" open>
+      <summary>Day 1 — Acquisition &amp; image fundamentals <span class="tag">scikit-image · OpenCV · Fiji</span></summary>
+      <div class="body">
+        <h3>Morning — concepts &amp; demo</h3>
+        <ul>
+          <li><strong>Why imaging for phenotyping:</strong> traits, throughput, and the measurement chain from sensor to number.</li>
+          <li><strong>Imaging modalities:</strong> RGB, multispectral, thermal, chlorophyll fluorescence, depth — what each measures and its artefacts.</li>
+          <li><strong>How a digital image works:</strong> pixels, bit depth, channels, raw vs. compressed, EXIF metadata.</li>
+          <li><strong>Colour spaces:</strong> RGB → HSV, Lab, and excess-green (ExG) indices; why colour space choice makes or breaks segmentation.</li>
+          <li><strong>Calibration:</strong> colour cards, scale bars, flat-field correction, and fixing geometric distortion.</li>
+        </ul>
+        <h3>Afternoon — practical</h3>
+        <ul>
+          <li>Load, inspect, and convert images with <code>scikit-image</code> and <code>OpenCV</code>; read pixel statistics and histograms.</li>
+          <li>Build a tidy dataset folder with a metadata CSV (plant ID, date, treatment, scale).</li>
+          <li>Open the same images in <strong>Fiji/ImageJ</strong> for interactive inspection and measurement.</li>
+          <li><strong>Checkpoint:</strong> convert a batch of raw images to a calibrated, scale-annotated working set.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary>Day 2 — Noise filtering, segmentation &amp; shape <span class="tag">scikit-image · PlantCV · napari</span></summary>
+      <div class="body">
+        <h3>Morning — concepts &amp; demo</h3>
+        <ul>
+          <li><strong>Noise &amp; denoising:</strong> Gaussian, median, bilateral, non-local means, and total-variation filters; when smoothing destroys signal.</li>
+          <li><strong>Thresholding:</strong> global (Otsu), adaptive/local, and multi-channel colour thresholding.</li>
+          <li><strong>Morphological operations:</strong> erosion, dilation, opening, closing, watershed for touching objects.</li>
+          <li><strong>Shape &amp; morphometrics:</strong> area, perimeter, convex hull, solidity, eccentricity, skeleton length, leaf count.</li>
+        </ul>
+        <h3>Afternoon — practical</h3>
+        <ul>
+          <li>Build a classical segmentation pipeline in <strong>PlantCV</strong> for a rosette or seedling image set.</li>
+          <li>Interactively label and correct masks in <strong>napari</strong>.</li>
+          <li>Extract a morphometric trait table and plot trait distributions across treatments.</li>
+          <li><strong>Checkpoint:</strong> a reproducible mask-to-traits pipeline with a QC visual overlay.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary>Day 3 — Classical machine learning <span class="tag">scikit-learn · ilastik</span></summary>
+      <div class="body">
+        <h3>Morning — concepts &amp; demo</h3>
+        <ul>
+          <li><strong>From pixels to features:</strong> colour, texture (GLCM, LBP), and shape descriptors as model inputs.</li>
+          <li><strong>Supervised learning basics:</strong> train/validation/test splits, leakage, cross-validation, class imbalance.</li>
+          <li><strong>Models:</strong> logistic regression, SVM, random forests, gradient boosting — strengths and interpretability.</li>
+          <li><strong>Evaluation:</strong> accuracy vs. precision/recall/F1, confusion matrices, regression error metrics, calibration.</li>
+          <li><strong>Pixel classification:</strong> random-forest segmentation as a bridge to deep learning.</li>
+        </ul>
+        <h3>Afternoon — practical</h3>
+        <ul>
+          <li>Engineer features from Day-2 masks and train a <strong>scikit-learn</strong> classifier (e.g. healthy vs. stressed).</li>
+          <li>Train an interactive pixel classifier in <strong>ilastik</strong> and compare it to threshold-based segmentation.</li>
+          <li>Run cross-validation and read the confusion matrix critically.</li>
+          <li><strong>Checkpoint:</strong> a validated trait classifier with an honest performance report.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary>Day 4 — Deep learning for phenotyping <span class="tag">PyTorch · YOLO · SAM</span></summary>
+      <div class="body">
+        <h3>Morning — concepts &amp; demo</h3>
+        <ul>
+          <li><strong>Neural network intuition:</strong> convolutions, feature maps, loss, backprop, overfitting — visually, not just mathematically.</li>
+          <li><strong>Transfer learning:</strong> why fine-tuning a pretrained CNN beats training from scratch on small phenotyping datasets.</li>
+          <li><strong>Task families:</strong> classification, object detection &amp; counting (YOLO), semantic/instance segmentation.</li>
+          <li><strong>Foundation models:</strong> the Segment Anything Model (SAM) for promptable, label-efficient segmentation.</li>
+          <li><strong>Annotation &amp; data:</strong> how much labelled data you really need, and augmentation strategies.</li>
+        </ul>
+        <h3>Afternoon — practical (GPU or Colab)</h3>
+        <ul>
+          <li>Fine-tune a pretrained CNN in <strong>PyTorch</strong> for a phenotyping classification task.</li>
+          <li>Train/run a <strong>YOLO</strong> detector to count organs (e.g. spikes, fruits, leaves).</li>
+          <li>Use <strong>SAM</strong> to generate segmentation masks with minimal manual labelling.</li>
+          <li><strong>Checkpoint:</strong> a trained model with metrics, plus inference on held-out images.</li>
+        </ul>
+        <div class="callout warn"><strong>No GPU?</strong> The full afternoon runs on free Google Colab GPUs — see <a href="setup.html#hardware">Setup → Hardware</a>.</div>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary>Day 5 — 3D vision &amp; capstone <span class="tag">COLMAP/Meshroom · Open3D · CloudCompare</span></summary>
+      <div class="body">
+        <h3>Morning — concepts &amp; demo</h3>
+        <ul>
+          <li><strong>3D phenotyping motivation:</strong> traits you can't get from 2D — volume, canopy architecture, self-occlusion.</li>
+          <li><strong>Photogrammetry / structure-from-motion:</strong> from a turntable image set to a point cloud with <strong>COLMAP</strong> or <strong>Meshroom</strong>.</li>
+          <li><strong>Point-cloud processing:</strong> registration, downsampling, normals, meshing in <strong>Open3D</strong>.</li>
+          <li><strong>Measurement &amp; QC:</strong> volume, height, leaf-area estimates and visual inspection in <strong>CloudCompare</strong>.</li>
+          <li><strong>Field scale:</strong> a brief look at drone orthomosaics and plot extraction in <strong>QGIS</strong> (with commercial equivalents noted).</li>
+        </ul>
+        <h3>Afternoon — capstone</h3>
+        <ul>
+          <li>Apply any part of the week's toolkit to a phenotyping question on your own or a provided dataset.</li>
+          <li>Package the analysis as a reproducible notebook + environment.</li>
+          <li>Short show-and-tell: each participant presents one result and one thing that surprised them.</li>
+          <li><strong>Checkpoint:</strong> capstone notebook submitted for the optional certificate.</li>
+        </ul>
+      </div>
+    </details>
+
+  </section>
+
+  <section>
+    <h2>Mapping to the seven topics</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Topic</th><th>Where it lives</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Image acquisition</td><td>Day 1</td></tr>
+          <tr><td>2</td><td>Noise filtering</td><td>Day 2 (morning)</td></tr>
+          <tr><td>3</td><td>Segmentation</td><td>Day 2–3 (classical → learned)</td></tr>
+          <tr><td>4</td><td>Shape analysis / morphometrics</td><td>Day 2 (afternoon)</td></tr>
+          <tr><td>5</td><td>Classical machine learning</td><td>Day 3</td></tr>
+          <tr><td>6</td><td>Deep learning</td><td>Day 4</td></tr>
+          <tr><td>7</td><td>3D vision</td><td>Day 5</td></tr>
+          <tr><td>—</td><td>Imaging, data &amp; practicals (cross-cutting)</td><td>Every afternoon</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Assessment &amp; certification</h2>
+    <ul>
+      <li><strong>Daily checkpoints (60%)</strong> — one short practical deliverable per day, reviewed by the TA.</li>
+      <li><strong>Capstone (40%)</strong> — a reproducible notebook answering a phenotyping question, presented on Day 5.</li>
+      <li><strong>Certificate of completion</strong> issued to participants who attend ≥80% and submit the capstone.</li>
+    </ul>
+  </section>
+
+</div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p>Course materials licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. <a href="index.html">Back to overview</a>.</p>
+  </div>
+</footer>
+</body>
+</html>

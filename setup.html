@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Setup — Image Analysis for Plant Phenotyping</title>
+<meta name="description" content="Software stack, hardware requirements, environment install, and pre-arrival checklist for the Image Analysis for Plant Phenotyping course.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <div class="brand">Image Analysis for <span>Plant Phenotyping</span></div>
+    <nav class="main">
+      <a href="index.html">Overview</a>
+      <a href="syllabus.html">Programme</a>
+      <a href="setup.html" class="active">Setup</a>
+      <a href="resources.html">Resources</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+
+  <section>
+    <h2>Pre-arrival checklist</h2>
+    <div class="callout"><strong>Do this at least 3 days before Day 1.</strong> Installing on conference Wi-Fi on the morning of the course never ends well.</div>
+    <ul class="checklist">
+      <li>Install <a href="https://github.com/conda-forge/miniforge#install">Miniforge</a> (conda + the conda-forge channel; includes the fast <code>mamba</code> solver).</li>
+      <li>Download this repository (<code>git clone</code> or "Download ZIP").</li>
+      <li>Create the environment: <code>conda env create -f env/environment.yml</code></li>
+      <li>Activate it: <code>conda activate phenotyping</code></li>
+      <li>Run the verifier: <code>python notebooks/00_check_environment.py</code> — every required line should read <code>[ ok ]</code>.</li>
+      <li>Install the GUI apps you'll use (Fiji, ilastik — see the table below).</li>
+      <li>Create a free <a href="https://colab.research.google.com/">Google Colab</a> account as the Day-4 GPU fallback.</li>
+      <li>(Optional) Bring a small set of your own plant images to use in the practicals.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Install the Python environment</h2>
+    <p>The repository ships a conda <code>environment.yml</code> for a one-command setup. Using <code>mamba</code> (bundled with Miniforge) is faster:</p>
+    <pre><code>git clone https://github.com/&lt;your-org&gt;/image-analysis-phenotyping-training.git
+cd image-analysis-phenotyping-training
+
+# create + activate (use mamba in place of conda if you prefer)
+conda env create -f env/environment.yml
+conda activate phenotyping
+
+# confirm everything imported
+python notebooks/00_check_environment.py</code></pre>
+    <div class="callout warn"><strong>NVIDIA GPU users:</strong> the environment installs the CPU build of PyTorch so it works everywhere. After creating the env, install the CUDA build matching your driver from <a href="https://pytorch.org/get-started/locally/">pytorch.org/get-started/locally</a>.</div>
+    <p>No conda? A <a href="env/requirements.txt"><code>requirements.txt</code></a> is provided for a plain virtualenv or Colab. Always create a virtualenv first so you don't pollute the system Python:</p>
+    <pre><code>python -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
+pip install -r env/requirements.txt</code></pre>
+  </section>
+
+  <section id="stack">
+    <h2>Software stack — Python / command-line</h2>
+    <p>These install via the environment file above. Licenses summarised; confirm against each project before redistribution.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Tool</th><th>Role in the course</th><th>License</th><th>Get it</th></tr></thead>
+        <tbody>
+          <tr><td><strong>scikit-image</strong></td><td>Core image processing — filters, segmentation, morphometrics</td><td><span class="lic oss">BSD-3</span></td><td><a href="https://scikit-image.org/">scikit-image.org</a></td></tr>
+          <tr><td><strong>OpenCV</strong></td><td>Fast image I/O, transforms, classical CV ops</td><td><span class="lic oss">Apache-2.0</span></td><td><a href="https://opencv.org/">opencv.org</a></td></tr>
+          <tr><td><strong>PlantCV</strong></td><td>Plant-specific phenotyping pipelines &amp; trait extraction</td><td><span class="lic oss">MIT</span></td><td><a href="https://plantcv.org/">plantcv.org</a></td></tr>
+          <tr><td><strong>scikit-learn</strong></td><td>Classical ML — classifiers, regressors, cross-validation</td><td><span class="lic oss">BSD-3</span></td><td><a href="https://scikit-learn.org/">scikit-learn.org</a></td></tr>
+          <tr><td><strong>PyTorch</strong></td><td>Deep learning framework (CNNs, transfer learning)</td><td><span class="lic oss">BSD-3</span></td><td><a href="https://pytorch.org/">pytorch.org</a></td></tr>
+          <tr><td><strong>torchvision</strong></td><td>Pretrained models, datasets, image transforms</td><td><span class="lic oss">BSD-3</span></td><td><a href="https://pytorch.org/vision/">pytorch.org/vision</a></td></tr>
+          <tr><td><strong>Ultralytics (YOLO)</strong></td><td>Object detection &amp; counting of plant organs</td><td><span class="lic oss">AGPL-3.0</span></td><td><a href="https://github.com/ultralytics/ultralytics">github.com/ultralytics</a></td></tr>
+          <tr><td><strong>Segment Anything (SAM)</strong></td><td>Promptable, label-efficient segmentation</td><td><span class="lic oss">Apache-2.0</span></td><td><a href="https://github.com/facebookresearch/segment-anything">github.com/facebookresearch/segment-anything</a></td></tr>
+          <tr><td><strong>Open3D</strong></td><td>Point-cloud &amp; mesh processing for 3D phenotyping</td><td><span class="lic oss">MIT</span></td><td><a href="https://www.open3d.org/">open3d.org</a></td></tr>
+          <tr><td><strong>JupyterLab</strong></td><td>Notebook environment for all practicals</td><td><span class="lic oss">BSD-3</span></td><td><a href="https://jupyter.org/">jupyter.org</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="gui">
+    <h2>Software stack — GUI applications</h2>
+    <p>Install these manually from the official download pages. They cover interactive inspection, labelling, and 3D work where a point-and-click tool beats a script.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>App</th><th>Role in the course</th><th>License</th><th>Download</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Fiji / ImageJ</strong></td><td>Interactive image inspection &amp; measurement (Day 1–2)</td><td><span class="lic oss">GPL / public domain</span></td><td><a href="https://fiji.sc/">fiji.sc</a></td></tr>
+          <tr><td><strong>napari</strong></td><td>n-D image viewer &amp; manual mask correction (Day 2)</td><td><span class="lic oss">BSD-3</span></td><td><a href="https://napari.org/">napari.org</a> (also in the env)</td></tr>
+          <tr><td><strong>ilastik</strong></td><td>Interactive random-forest pixel classification (Day 3)</td><td><span class="lic oss">GPL-2.0+ / free</span></td><td><a href="https://www.ilastik.org/download">ilastik.org/download</a></td></tr>
+          <tr><td><strong>CloudCompare</strong></td><td>Point-cloud inspection &amp; measurement (Day 5)</td><td><span class="lic oss">GPL</span></td><td><a href="https://www.cloudcompare.org/">cloudcompare.org</a> · <a href="https://github.com/CloudCompare/CloudCompare">source</a></td></tr>
+          <tr><td><strong>Meshroom</strong></td><td>GUI photogrammetry / structure-from-motion (Day 5)</td><td><span class="lic oss">MPL-2.0</span></td><td><a href="https://alicevision.org/#meshroom">alicevision.org</a></td></tr>
+          <tr><td><strong>COLMAP</strong></td><td>Structure-from-motion / multi-view stereo (Day 5)</td><td><span class="lic oss">BSD-3</span></td><td><a href="https://colmap.github.io/">colmap.github.io</a></td></tr>
+          <tr><td><strong>QGIS</strong></td><td>Drone orthomosaics &amp; plot extraction (Day 5, field scale)</td><td><span class="lic oss">GPL-2.0+</span></td><td><a href="https://qgis.org/download/">qgis.org/download</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>Commercial equivalents (noted, not required)</h3>
+    <p>The course is open-source-first. Where teams already license commercial tools, these are the common equivalents — useful to mention but not used in practicals:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Commercial tool</th><th>Open-source equivalent used here</th><th>License</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Pix4Dfields / Pix4Dmapper</strong></td><td>QGIS + COLMAP/Meshroom</td><td><span class="lic comm">Commercial</span></td></tr>
+          <tr><td><strong>Agisoft Metashape</strong></td><td>COLMAP / Meshroom</td><td><span class="lic comm">Commercial</span></td></tr>
+          <tr><td><strong>MATLAB + Image Processing Toolbox</strong></td><td>scikit-image / OpenCV</td><td><span class="lic comm">Commercial</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="hardware">
+    <h2>Hardware requirements</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th></th><th>Minimum</th><th>Recommended</th></tr></thead>
+        <tbody>
+          <tr><td><strong>CPU</strong></td><td>4 cores</td><td>8+ cores</td></tr>
+          <tr><td><strong>RAM</strong></td><td>8 GB</td><td>16–32 GB (3D &amp; large images)</td></tr>
+          <tr><td><strong>Disk</strong></td><td>20 GB free</td><td>50 GB free (datasets + models)</td></tr>
+          <tr><td><strong>GPU</strong></td><td>None — use Colab for Day 4</td><td>NVIDIA GPU ≥6 GB VRAM for local DL</td></tr>
+          <tr><td><strong>OS</strong></td><td>Windows 10+, macOS 12+, or Linux</td><td>Linux or macOS for smoothest 3D tooling</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout"><strong>No-GPU path.</strong> Days 1–3 and the Day-5 3D work run comfortably on CPU. Only the Day-4 deep-learning practical benefits from a GPU — and that runs end-to-end on free <a href="https://colab.research.google.com/">Google Colab</a> GPUs, so a modest laptop is enough to complete the whole course.</div>
+  </section>
+
+  <section>
+    <h2>Instructor / host checklist</h2>
+    <p>If you're <em>delivering</em> this course rather than attending it:</p>
+    <ul class="checklist">
+      <li>Test the full environment install on each target OS one week ahead.</li>
+      <li>Pre-download model weights (YOLO, SAM) and datasets onto a shared USB/drive as a Wi-Fi fallback.</li>
+      <li>Confirm Colab access works on the venue network (some institutional firewalls block it).</li>
+      <li>Print or share the pre-arrival checklist with participants 1–2 weeks ahead.</li>
+      <li>Reserve a room with reliable power outlets at every seat.</li>
+      <li>Recruit one TA per ~12 participants for afternoon practicals.</li>
+    </ul>
+  </section>
+
+</div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p>Course materials licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Tool licenses are summarised in good faith — verify against each project before redistribution. <a href="index.html">Back to overview</a>.</p>
+  </div>
+</footer>
+</body>
+</html>

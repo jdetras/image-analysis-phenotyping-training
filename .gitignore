@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+env-local/
+
+# OS / editor
+.DS_Store
+.ipynb_checkpoints/
+
+# Data & model weights (keep the repo light)
+data/
+*.pt
+*.pth
+*.onnx
+*.ply
+*.las

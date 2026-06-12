@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Image Analysis for Plant Phenotyping — 5-Day Intensive</title>
+<meta name="description" content="A 5-day, open-source-first training course in image analysis for high-throughput plant phenotyping: acquisition, segmentation, classical ML, deep learning, and 3D vision.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <div class="brand">Image Analysis for <span>Plant Phenotyping</span></div>
+    <nav class="main">
+      <a href="index.html" class="active">Overview</a>
+      <a href="syllabus.html">Programme</a>
+      <a href="setup.html">Setup</a>
+      <a href="resources.html">Resources</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <h1>Image Analysis for Plant Phenotyping</h1>
+    <p class="tagline">A 5-day, hands-on intensive taking you from raw image acquisition to 3D reconstruction — built on an open-source-first toolchain, deliverable in-person or hybrid.</p>
+    <div class="badges">
+      <span class="badge">5 days · ~35 hours</span>
+      <span class="badge">Open-source first</span>
+      <span class="badge">In-person / hybrid</span>
+      <span class="badge">No-GPU Colab fallback</span>
+      <span class="badge">CC BY 4.0 materials</span>
+    </div>
+    <div class="cta">
+      <a class="btn primary" href="syllabus.html">View the programme →</a>
+      <a class="btn ghost" href="setup.html">Pre-arrival setup</a>
+    </div>
+  </div>
+</div>
+
+<main>
+<div class="wrap">
+
+  <section id="audience">
+    <h2>Who this course is for</h2>
+    <p>Researchers, technicians, graduate students, and breeding-program staff who collect plant images — from flatbed scans and growth-chamber cameras to field drones — and want to turn them into quantitative, analysis-ready traits. The course assumes:</p>
+    <ul>
+      <li><strong>Basic Python literacy</strong> — you can read a script, run a function, and edit variables. A pre-course primer notebook is provided for refreshers.</li>
+      <li><strong>A scientific background in plant biology, agronomy, or breeding</strong> — or a computational background working alongside plant scientists.</li>
+      <li><strong>No prior computer-vision or deep-learning experience required.</strong> We build it up from first principles.</li>
+    </ul>
+    <p>Cohort size is tuned for <strong>16–24 participants</strong> with one instructor and one teaching assistant, so everyone gets hands-on support during practicals.</p>
+  </section>
+
+  <section id="outcomes">
+    <h2>Learning outcomes</h2>
+    <p>By the end of the week, participants will be able to:</p>
+    <div class="cards">
+      <div class="card"><div class="num">01</div><h3>Acquire &amp; manage</h3><p>Design an imaging protocol, control for illumination and scale, and organise datasets with reproducible metadata.</p></div>
+      <div class="card"><div class="num">02</div><h3>Pre-process</h3><p>Apply denoising, colour-space transforms, and calibration so downstream measurements are robust and comparable.</p></div>
+      <div class="card"><div class="num">03</div><h3>Segment</h3><p>Separate plant from background using thresholding, classical, and learned segmentation — and know when each fails.</p></div>
+      <div class="card"><div class="num">04</div><h3>Quantify shape</h3><p>Extract morphometric traits (area, length, convex hull, skeleton, colour indices) and validate them against ground truth.</p></div>
+      <div class="card"><div class="num">05</div><h3>Apply classical ML</h3><p>Engineer features and train interpretable classifiers/regressors for trait prediction and quality control.</p></div>
+      <div class="card"><div class="num">06</div><h3>Train deep models</h3><p>Fine-tune CNNs, detectors (YOLO), and promptable segmenters (SAM) for counting, detection, and pixel labelling.</p></div>
+      <div class="card"><div class="num">07</div><h3>Reconstruct in 3D</h3><p>Build point clouds and meshes via photogrammetry and measure volumetric/architectural traits.</p></div>
+      <div class="card"><div class="num">08</div><h3>Work reproducibly</h3><p>Package an analysis in a versioned environment with notebooks, so a colleague can re-run it end to end.</p></div>
+    </div>
+  </section>
+
+  <section id="programme-summary">
+    <h2>Programme at a glance</h2>
+    <p>Seven topics, woven across five days, with a cross-cutting <em>imaging, data &amp; practicals</em> thread running through every afternoon.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Day</th><th>Theme</th><th>Core topics</th><th>Primary tools</th></tr></thead>
+        <tbody>
+          <tr><td><strong>1</strong></td><td>Acquisition &amp; image fundamentals</td><td>Imaging modalities, colour spaces, calibration, data management</td><td>scikit-image, OpenCV, Fiji</td></tr>
+          <tr><td><strong>2</strong></td><td>Noise, segmentation &amp; shape</td><td>Denoising, thresholding, morphology, morphometrics</td><td>scikit-image, PlantCV, napari</td></tr>
+          <tr><td><strong>3</strong></td><td>Classical machine learning</td><td>Feature engineering, classification, regression, pixel classifiers</td><td>scikit-learn, ilastik</td></tr>
+          <tr><td><strong>4</strong></td><td>Deep learning for phenotyping</td><td>CNNs, transfer learning, detection, promptable segmentation</td><td>PyTorch, YOLO, SAM</td></tr>
+          <tr><td><strong>5</strong></td><td>3D vision &amp; capstone</td><td>Photogrammetry, point clouds, meshes, mini-project</td><td>COLMAP/Meshroom, Open3D, CloudCompare</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:1rem"><a class="btn ghost" href="syllabus.html">See the full day-by-day schedule →</a></p>
+  </section>
+
+  <section id="format">
+    <h2>Format &amp; logistics</h2>
+    <div class="cards">
+      <div class="card"><h3>Daily rhythm</h3><p>Mornings are concept + guided demo (~3 h). Afternoons are hands-on practicals on your own data or provided datasets (~3.5 h), with TA support.</p></div>
+      <div class="card"><h3>Delivery</h3><p>In-person computer lab or hybrid via video + shared notebooks. All compute can run locally or on free Google Colab GPUs.</p></div>
+      <div class="card"><h3>Assessment</h3><p>Daily practical checkpoints plus a Day-5 capstone applied to a real phenotyping question. Optional certificate on completion.</p></div>
+    </div>
+  </section>
+
+  <section id="start">
+    <h2>Getting started</h2>
+    <ol>
+      <li>Read the <a href="setup.html">Setup &amp; pre-arrival checklist</a> at least three days before the course.</li>
+      <li>Install the <a href="env/environment.yml">conda environment</a> (or use the Colab fallback) and run the verification notebook.</li>
+      <li>Skim the <a href="resources.html">datasets &amp; references</a> so you know what we'll be working with.</li>
+    </ol>
+  </section>
+
+</div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p>Course materials licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Software referenced retains its own licenses — see <a href="resources.html#licenses">Resources</a>. Built as a static GitHub Pages site.</p>
+  </div>
+</footer>
+</body>
+</html>

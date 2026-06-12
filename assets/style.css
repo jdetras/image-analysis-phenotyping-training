@@ -1,0 +1,198 @@
+/* Image Analysis for Plant Phenotyping — training site styles */
+:root {
+  --bg: #0f1419;
+  --bg-alt: #161b22;
+  --surface: #1c2330;
+  --border: #2a3340;
+  --text: #e6edf3;
+  --muted: #9aa7b4;
+  --accent: #3fb950;
+  --accent-2: #58a6ff;
+  --warn: #d29922;
+  --max-width: 980px;
+  --radius: 10px;
+  --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #ffffff;
+    --bg-alt: #f6f8fa;
+    --surface: #ffffff;
+    --border: #d0d7de;
+    --text: #1f2328;
+    --muted: #57606a;
+    --accent: #1a7f37;
+    --accent-2: #0969da;
+    --warn: #9a6700;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent-2); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.wrap { max-width: var(--max-width); margin: 0 auto; padding: 0 1.25rem; }
+
+/* Header / nav */
+header.site {
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-alt);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: saturate(120%) blur(6px);
+}
+header.site .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .5rem;
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+}
+.brand { font-weight: 700; font-size: 1.05rem; color: var(--text); }
+.brand span { color: var(--accent); }
+nav.main { display: flex; gap: 1.1rem; flex-wrap: wrap; }
+nav.main a { color: var(--muted); font-size: .95rem; font-weight: 500; }
+nav.main a:hover, nav.main a.active { color: var(--text); text-decoration: none; }
+
+/* Hero */
+.hero {
+  padding: 3.5rem 0 2.5rem;
+  border-bottom: 1px solid var(--border);
+  background: radial-gradient(1200px 400px at 70% -10%, rgba(63,185,80,.12), transparent);
+}
+.hero h1 { font-size: 2.3rem; line-height: 1.15; margin: 0 0 .6rem; }
+.hero .tagline { font-size: 1.15rem; color: var(--muted); margin: 0 0 1.4rem; max-width: 70ch; }
+.badges { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.5rem; }
+.badge {
+  font-size: .8rem;
+  padding: .25rem .65rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted);
+  background: var(--surface);
+}
+.cta { display: flex; gap: .75rem; flex-wrap: wrap; }
+.btn {
+  display: inline-block;
+  padding: .6rem 1.1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  border: 1px solid var(--border);
+}
+.btn.primary { background: var(--accent); color: #06210d; border-color: var(--accent); }
+.btn.primary:hover { text-decoration: none; filter: brightness(1.08); }
+.btn.ghost { color: var(--text); background: var(--surface); }
+.btn.ghost:hover { text-decoration: none; border-color: var(--accent-2); }
+
+/* Sections */
+main { padding: 2.5rem 0 4rem; }
+section { margin-bottom: 2.75rem; }
+h2 { font-size: 1.5rem; margin: 0 0 1rem; padding-bottom: .4rem; border-bottom: 1px solid var(--border); }
+h3 { font-size: 1.15rem; margin: 1.5rem 0 .5rem; }
+p { margin: .5rem 0; }
+
+ul, ol { padding-left: 1.3rem; }
+li { margin: .3rem 0; }
+
+/* Cards */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+.card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.2rem;
+  background: var(--surface);
+}
+.card h3 { margin-top: 0; }
+.card .num { font-size: .8rem; color: var(--accent); font-weight: 700; letter-spacing: .05em; }
+
+/* Tables */
+.table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); }
+table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+th, td { text-align: left; padding: .6rem .8rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+th { background: var(--bg-alt); font-weight: 600; position: sticky; top: 0; }
+tr:last-child td { border-bottom: none; }
+td code { white-space: nowrap; }
+
+/* License pills */
+.lic { font-size: .78rem; padding: .1rem .5rem; border-radius: 6px; border: 1px solid var(--border); color: var(--muted); white-space: nowrap; }
+.lic.oss { color: var(--accent); border-color: rgba(63,185,80,.4); }
+.lic.free { color: var(--accent-2); border-color: rgba(88,166,255,.4); }
+.lic.comm { color: var(--warn); border-color: rgba(210,153,34,.4); }
+
+/* Code */
+pre {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+  overflow-x: auto;
+  font-family: var(--mono);
+  font-size: .85rem;
+  line-height: 1.5;
+}
+code { font-family: var(--mono); font-size: .88em; background: var(--bg-alt); padding: .12rem .35rem; border-radius: 5px; }
+pre code { background: none; padding: 0; }
+
+/* Callouts */
+.callout {
+  border-left: 4px solid var(--accent-2);
+  background: var(--surface);
+  padding: .9rem 1.1rem;
+  border-radius: 0 8px 8px 0;
+  margin: 1rem 0;
+}
+.callout.warn { border-left-color: var(--warn); }
+.callout strong { color: var(--text); }
+
+/* Day schedule */
+.day { border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1rem; overflow: hidden; }
+.day > summary {
+  cursor: pointer;
+  padding: 1rem 1.2rem;
+  background: var(--surface);
+  font-weight: 600;
+  font-size: 1.05rem;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.day > summary::-webkit-details-marker { display: none; }
+.day > summary .tag { font-size: .8rem; color: var(--muted); font-weight: 500; }
+.day[open] > summary { border-bottom: 1px solid var(--border); }
+.day .body { padding: 1rem 1.2rem; }
+
+/* Footer */
+footer.site {
+  border-top: 1px solid var(--border);
+  padding: 2rem 0;
+  color: var(--muted);
+  font-size: .9rem;
+}
+footer.site a { color: var(--muted); text-decoration: underline; }
+
+.checklist { list-style: none; padding-left: 0; }
+.checklist li { padding-left: 1.8rem; position: relative; }
+.checklist li::before { content: "☐"; position: absolute; left: 0; color: var(--accent); }
+
+@media (max-width: 640px) {
+  .hero h1 { font-size: 1.8rem; }
+  nav.main { gap: .8rem; }
+}
