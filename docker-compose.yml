@@ -17,13 +17,18 @@ services:
     ports:
       - "127.0.0.1:8888:8888"
     environment:
-      # Change this token before sharing the machine on a network.
-      JUPYTER_TOKEN: phenotyping
+      # Override per-run without editing this file, e.g.
+      #   JUPYTER_TOKEN=$(openssl rand -hex 16) docker compose up
+      # The default is a known token for convenience — fine on localhost, but
+      # set your own before sharing the machine on a network.
+      JUPYTER_TOKEN: ${JUPYTER_TOKEN:-phenotyping}
     volumes:
+      # The repo is mounted so notebooks/data persist on the host. On native
+      # Linux with a host UID != 1000, add `user: "${UID:-1000}:${GID:-1000}"`
+      # (run `export UID GID` first) to avoid permission errors on saved files.
       - ./:/home/mambauser/work
     # Give large images / point clouds room to work.
     shm_size: "2gb"
-    restart: unless-stopped
 
     # ---- Optional GPU (Day-4 deep learning) ----
     # Requires the NVIDIA Container Toolkit on the host AND an image rebuilt

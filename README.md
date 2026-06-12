@@ -78,6 +78,16 @@ Then open <http://localhost:8888/lab?token=phenotyping>. The repo is mounted int
 the container, so notebooks and downloaded data persist on your host. The port
 is bound to `127.0.0.1` only, so the server isn't exposed to your network.
 
+> **Set your own token** for anything beyond a personal localhost session:
+> `JUPYTER_TOKEN=$(openssl rand -hex 16) docker compose up` (then use that token
+> in the URL). The committed default is a convenience for local use only.
+>
+> **Linux host, UID ≠ 1000?** Files saved from JupyterLab are written as the
+> container user (UID 1000). If your host UID differs, run
+> `export UID GID` and add `user: "${UID}:${GID}"` under the service in
+> `docker-compose.yml` so saved files stay writable on the host. (macOS/Windows
+> Docker Desktop map UIDs automatically — no action needed.)
+
 Without compose:
 
 ```bash

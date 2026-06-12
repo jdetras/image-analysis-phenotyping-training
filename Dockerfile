@@ -50,9 +50,10 @@ ARG MAMBA_DOCKERFILE_ACTIVATE_ENV=1
 WORKDIR /home/mambauser/work
 COPY --chown=$MAMBA_USER:$MAMBA_USER notebooks/ ./notebooks/
 
-# fail the build early if the stack didn't import cleanly
-RUN python notebooks/00_check_environment.py || \
-    echo "WARNING: environment check reported issues (see above) — image still built"
+# Fail the build early if a REQUIRED package didn't import cleanly. The checker
+# exits non-zero only on required imports; optional ones (napari, SAM) just warn,
+# so a headless build won't fail on them.
+RUN python notebooks/00_check_environment.py
 
 EXPOSE 8888
 
