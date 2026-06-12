@@ -1,0 +1,38 @@
+# Image Analysis for Plant Phenotyping — Docker Compose
+#
+#   docker compose up --build      # build + start JupyterLab
+#   docker compose up -d           # run in the background
+#   docker compose down            # stop and remove the container
+#
+# Then open:  http://localhost:8888/lab?token=phenotyping
+#
+# The repository is mounted at /home/mambauser/work, so notebooks you create and
+# data you download persist on the host. The port is bound to 127.0.0.1 only, so
+# the JupyterLab server is not exposed to your local network.
+services:
+  phenotyping:
+    build: .
+    image: phenotyping-training:latest
+    container_name: phenotyping-training
+    ports:
+      - "127.0.0.1:8888:8888"
+    environment:
+      # Change this token before sharing the machine on a network.
+      JUPYTER_TOKEN: phenotyping
+    volumes:
+      - ./:/home/mambauser/work
+    # Give large images / point clouds room to work.
+    shm_size: "2gb"
+    restart: unless-stopped
+
+    # ---- Optional GPU (Day-4 deep learning) ----
+    # Requires the NVIDIA Container Toolkit on the host AND an image rebuilt
+    # against a CUDA PyTorch build (see the GPU note in the README). Then
+    # uncomment:
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]

@@ -1,0 +1,17 @@
+# Keep the build context small and the image clean.
+.git
+.gitignore
+.venv
+build/.venv
+build/preview-*
+dist
+data
+models
+node_modules
+*.pt
+*.pth
+*.onnx
+*.ply
+*.las
+.DS_Store
+.ipynb_checkpoints

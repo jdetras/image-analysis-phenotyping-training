@@ -21,6 +21,7 @@ open-source-first toolchain, deliverable in-person or hybrid.
 | `notebooks/00_check_environment.py` | Verifies the install; usable in CI |
 | `.nojekyll` | Tells GitHub Pages to serve HTML as-is (no Jekyll build) |
 | `setup.sh` | One-shot installer: Miniforge → env → verify → (opt) weights/GUI/data |
+| `Dockerfile` / `docker-compose.yml` | Containerised JupyterLab with the full Python stack |
 | `dist/…Participant-Guide.pdf` / `.docx` | Formal, printable participant guide (PDF + Word) |
 | `build/` | Sources that generate the guide (`build_docx.js`, `print-guide.html`) |
 
@@ -60,6 +61,40 @@ python notebooks/00_check_environment.py      # every required line should read 
 No conda? Use a virtualenv with `env/requirements.txt` (or `./setup.sh --use-venv`),
 or run on free Google Colab GPUs. Full instructions are on the **Setup** page.
 On Windows, run `setup.sh` under WSL2 or Git Bash, or follow the manual steps.
+
+## Run with Docker (no local Python needed)
+
+The container ships the entire Python / command-line stack (scikit-image,
+OpenCV, PlantCV, scikit-learn, PyTorch, YOLO, SAM, Open3D, JupyterLab) built
+from the same `env/environment.yml`. Participants need only Docker.
+
+```bash
+git clone https://github.com/jdetras/image-analysis-phenotyping-training.git
+cd image-analysis-phenotyping-training
+docker compose up --build        # first build takes a while (multi-GB)
+```
+
+Then open <http://localhost:8888/lab?token=phenotyping>. The repo is mounted into
+the container, so notebooks and downloaded data persist on your host. The port
+is bound to `127.0.0.1` only, so the server isn't exposed to your network.
+
+Without compose:
+
+```bash
+docker build -t phenotyping-training .
+docker run --rm -p 127.0.0.1:8888:8888 -e JUPYTER_TOKEN=phenotyping \
+  -v "$PWD":/home/mambauser/work phenotyping-training
+```
+
+**Scope.** The container covers Days 1–4 and the Open3D parts of Day 5. The
+desktop GUI apps (Fiji, ilastik, CloudCompare, Meshroom, QGIS) are not in the
+image — install those on the host from the Setup page.
+
+**GPU (optional, Day 4).** The image uses CPU PyTorch for portability — the
+no-GPU path runs everything, and heavy Day-4 training can use free Colab GPUs.
+For local GPU, install the NVIDIA Container Toolkit, change the `pip:` torch
+lines in `env/environment.yml` to a CUDA build, rebuild, and uncomment the
+`deploy.resources` block in `docker-compose.yml`.
 
 ## Publish on GitHub Pages
 
