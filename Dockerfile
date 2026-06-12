@@ -14,9 +14,11 @@
 #
 # Or just use docker-compose.yml: `docker compose up`.
 #
-# CPU by default (portable, matches the course's no-GPU path). For GPU training
-# on Day 4, use Google Colab, or see the GPU note in the Docker section of the
-# README to rebuild against a CUDA PyTorch build.
+# PyTorch here is a CUDA-enabled build (what `pip install torch` gives on Linux).
+# It runs CPU-only unless you expose a GPU, so the image is portable as-is, and
+# enabling GPU needs only the NVIDIA Container Toolkit + `--gpus all` (no rebuild).
+# The trade-off is image size (~12 GB). For a smaller CPU-only image, install
+# torch from the CPU wheel index (https://download.pytorch.org/whl/cpu).
 # =============================================================================
 FROM mambaorg/micromamba:1.5.8
 
@@ -43,17 +45,15 @@ COPY --chown=$MAMBA_USER:$MAMBA_USER env/environment.yml /tmp/environment.yml
 RUN micromamba install -y -n base -f /tmp/environment.yml \
     && micromamba clean --all --yes
 
-# activate the base env for any subsequent RUN/CMD steps
-ARG MAMBA_DOCKERFILE_ACTIVATE_ENV=1
-
 # --- copy the verification script + notebooks (repo is also mounted at runtime) ---
 WORKDIR /home/mambauser/work
 COPY --chown=$MAMBA_USER:$MAMBA_USER notebooks/ ./notebooks/
 
-# Fail the build early if a REQUIRED package didn't import cleanly. The checker
-# exits non-zero only on required imports; optional ones (napari, SAM) just warn,
-# so a headless build won't fail on them.
-RUN python notebooks/00_check_environment.py
+# Fail the build early if a REQUIRED package didn't import cleanly. `micromamba
+# run -n base` is used so this works regardless of build-shell activation; the
+# checker exits non-zero only on required imports — optional ones (napari, SAM)
+# just warn, so a headless build won't fail on them.
+RUN micromamba run -n base python notebooks/00_check_environment.py
 
 EXPOSE 8888
 

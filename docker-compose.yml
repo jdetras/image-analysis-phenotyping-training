@@ -31,9 +31,9 @@ services:
     shm_size: "2gb"
 
     # ---- Optional GPU (Day-4 deep learning) ----
-    # Requires the NVIDIA Container Toolkit on the host AND an image rebuilt
-    # against a CUDA PyTorch build (see the GPU note in the README). Then
-    # uncomment:
+    # The image already ships a CUDA-enabled PyTorch build, so no rebuild is
+    # needed — just install the NVIDIA Container Toolkit on the host and
+    # uncomment the block below to pass the GPU through:
     # deploy:
     #   resources:
     #     reservations:

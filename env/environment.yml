@@ -5,9 +5,9 @@
 # Verify:   python ../notebooks/00_check_environment.py
 #
 # Notes:
-#  - Installs the CPU build of PyTorch by default so it works on any laptop.
-#    For an NVIDIA GPU, follow https://pytorch.org/get-started/locally/ to
-#    install the matching CUDA build AFTER creating this environment.
+#  - PyTorch is installed via pip: a CPU/MPS build on macOS, and a CUDA-enabled
+#    build on Linux (both run fine CPU-only). To force a specific CPU- or
+#    CUDA-only build, see https://pytorch.org/get-started/locally/.
 #  - GUI applications (Fiji, ilastik, CloudCompare, QGIS, Meshroom) are
 #    installed separately — see setup.html. COLMAP can be installed via conda
 #    (see the commented line below) or as a standalone app.

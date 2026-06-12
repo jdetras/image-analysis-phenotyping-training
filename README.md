@@ -100,11 +100,13 @@ docker run --rm -p 127.0.0.1:8888:8888 -e JUPYTER_TOKEN=phenotyping \
 desktop GUI apps (Fiji, ilastik, CloudCompare, Meshroom, QGIS) are not in the
 image — install those on the host from the Setup page.
 
-**GPU (optional, Day 4).** The image uses CPU PyTorch for portability — the
-no-GPU path runs everything, and heavy Day-4 training can use free Colab GPUs.
-For local GPU, install the NVIDIA Container Toolkit, change the `pip:` torch
-lines in `env/environment.yml` to a CUDA build, rebuild, and uncomment the
-`deploy.resources` block in `docker-compose.yml`.
+**GPU (optional, Day 4).** The image already ships a **CUDA-enabled PyTorch**
+build (it runs CPU-only until a GPU is exposed, so it's portable as-is). To use a
+local NVIDIA GPU, install the [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html)
+and uncomment the `deploy.resources` block in `docker-compose.yml` — **no rebuild
+needed**. Heavy Day-4 training can also use free Colab GPUs. The CUDA build is why
+the image is ~12 GB; for a smaller CPU-only image, install torch from the CPU
+wheel index (`https://download.pytorch.org/whl/cpu`).
 
 ## Publish on GitHub Pages
 

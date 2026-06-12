@@ -44,7 +44,7 @@ cd image-analysis-phenotyping-training
 cd image-analysis-phenotyping-training
 docker compose up --build      # first build takes a while (multi-GB)</code></pre>
     <p>Then open <a href="http://localhost:8888/lab?token=phenotyping">http://localhost:8888/lab?token=phenotyping</a>. The repo is mounted into the container, so your notebooks and data persist on the host, and the port is bound to <code>127.0.0.1</code> only.</p>
-    <div class="callout"><strong>Scope.</strong> The container covers Days 1–4 and the Open3D parts of Day 5. The desktop GUI apps (Fiji, ilastik, CloudCompare, Meshroom, QGIS) are installed on the host — see the tables below. The image uses CPU PyTorch; for Day-4 GPU training use Google Colab or rebuild against a CUDA PyTorch build (see the repository README).</div>
+    <div class="callout"><strong>Scope.</strong> The container covers Days 1–4 and the Open3D parts of Day 5. The desktop GUI apps (Fiji, ilastik, CloudCompare, Meshroom, QGIS) are installed on the host — see the tables below. The image already ships a CUDA-enabled PyTorch build (it runs CPU-only until a GPU is exposed) — for a local NVIDIA GPU you only need the NVIDIA Container Toolkit and the <code>deploy</code> block in <code>docker-compose.yml</code>, no rebuild. Colab GPUs work too. See the repository README for details.</div>
   </section>
 
   <section>
