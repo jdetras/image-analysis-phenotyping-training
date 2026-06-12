@@ -24,6 +24,20 @@
 <div class="wrap">
 
   <section>
+    <h2>Fastest path: the automated installer</h2>
+    <p>On macOS or Linux, one script does the whole environment setup — it installs Miniforge if you don't have conda, builds the <code>phenotyping</code> environment, and runs the verifier:</p>
+    <pre><code>git clone https://github.com/jdetras/image-analysis-phenotyping-training.git
+cd image-analysis-phenotyping-training
+./setup.sh                 # environment + verification
+
+# optional extras:
+./setup.sh --all           # also pre-download YOLO+SAM weights, GUI apps, starter data
+./setup.sh --use-venv      # use a pip virtualenv instead of conda
+./setup.sh --help          # see all options</code></pre>
+    <p>The script is safe to re-run — every step checks for existing state first. Prefer to do it by hand, or on Windows? Follow the manual steps below (on Windows, run <code>setup.sh</code> under WSL2 or Git Bash).</p>
+  </section>
+
+  <section>
     <h2>Pre-arrival checklist</h2>
     <div class="callout"><strong>Do this at least 3 days before Day 1.</strong> Installing on conference Wi-Fi on the morning of the course never ends well.</div>
     <ul class="checklist">

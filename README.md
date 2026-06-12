@@ -20,6 +20,7 @@ open-source-first toolchain, deliverable in-person or hybrid.
 | `env/requirements.txt` | pip fallback (virtualenv / Google Colab) |
 | `notebooks/00_check_environment.py` | Verifies the install; usable in CI |
 | `.nojekyll` | Tells GitHub Pages to serve HTML as-is (no Jekyll build) |
+| `setup.sh` | One-shot installer: Miniforge → env → verify → (opt) weights/GUI/data |
 | `dist/…Participant-Guide.pdf` / `.docx` | Formal, printable participant guide (PDF + Word) |
 | `build/` | Sources that generate the guide (`build_docx.js`, `print-guide.html`) |
 
@@ -36,17 +37,29 @@ thread every afternoon:
 
 ## Quick start (for participants)
 
+**Automated (macOS / Linux)** — one command does everything: installs Miniforge
+if needed, builds the env, and verifies it.
+
 ```bash
 git clone https://github.com/jdetras/image-analysis-phenotyping-training.git
 cd image-analysis-phenotyping-training
+./setup.sh                 # env + verify
+# ./setup.sh --all         # also pre-download YOLO+SAM weights, GUI apps, starter data
+# ./setup.sh --use-venv    # pip/virtualenv instead of conda
+# ./setup.sh --help        # all options
+```
 
+**Manual (any OS)**
+
+```bash
 conda env create -f env/environment.yml      # or: mamba env create -f env/environment.yml
 conda activate phenotyping
 python notebooks/00_check_environment.py      # every required line should read [ ok ]
 ```
 
-No conda? Use a virtualenv with `env/requirements.txt`, or run on free Google
-Colab GPUs. Full instructions are on the **Setup** page.
+No conda? Use a virtualenv with `env/requirements.txt` (or `./setup.sh --use-venv`),
+or run on free Google Colab GPUs. Full instructions are on the **Setup** page.
+On Windows, run `setup.sh` under WSL2 or Git Bash, or follow the manual steps.
 
 ## Publish on GitHub Pages
 
