@@ -5,8 +5,7 @@ phenotyping, packaged as a static [GitHub Pages](https://pages.github.com/) site
 It takes participants from raw image acquisition to 3D reconstruction on an
 open-source-first toolchain, deliverable in-person or hybrid.
 
-**Live site:** `https://<your-user>.github.io/image-analysis-phenotyping-training/`
-(after you enable Pages — see below).
+**Live site:** <https://jdetras.github.io/image-analysis-phenotyping-training/>
 
 ## What's here
 
@@ -36,7 +35,7 @@ thread every afternoon:
 ## Quick start (for participants)
 
 ```bash
-git clone https://github.com/<your-user>/image-analysis-phenotyping-training.git
+git clone https://github.com/jdetras/image-analysis-phenotyping-training.git
 cd image-analysis-phenotyping-training
 
 conda env create -f env/environment.yml      # or: mamba env create -f env/environment.yml
@@ -55,12 +54,12 @@ git init
 git add .
 git commit -m "Initial course site"
 git branch -M main
-git remote add origin https://github.com/<your-user>/image-analysis-phenotyping-training.git
+git remote add origin https://github.com/jdetras/image-analysis-phenotyping-training.git
 git push -u origin main
 ```
 
 Then in the repo: **Settings → Pages → Source: Deploy from a branch → `main` / `/ (root)` → Save.**
-The site goes live at `https://<your-user>.github.io/image-analysis-phenotyping-training/`.
+The site goes live at `https://jdetras.github.io/image-analysis-phenotyping-training/`.
 
 > Preview locally with any static server, e.g. `python -m http.server 8000`
 > then open <http://localhost:8000>.
