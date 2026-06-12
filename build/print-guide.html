@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Image Analysis for Plant Phenotyping — Participant Guide</title>
+<style>
+  :root { --accent:#1a7f37; --accent-dark:#06210d; --muted:#57606a; --border:#d0d7de; --head:#1a7f37; --zebra:#f1f5f2; }
+  @page { size: Letter; margin: 18mm 16mm 20mm 16mm; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; color:#1f2328; font-size:10.5pt; line-height:1.5; margin:0; }
+  h1 { font-size:19pt; color:var(--accent-dark); border-bottom:2px solid var(--accent); padding-bottom:4px; margin:0 0 12px; page-break-after:avoid; }
+  h2 { font-size:14pt; color:var(--accent-dark); margin:18px 0 8px; page-break-after:avoid; }
+  h3 { font-size:11.5pt; color:var(--accent); margin:12px 0 4px; page-break-after:avoid; }
+  p { margin:.35em 0; }
+  ul { margin:.3em 0 .6em; padding-left:1.1em; }
+  li { margin:.18em 0; }
+  a { color:var(--accent); text-decoration:none; }
+  .section { page-break-before: always; }
+  table { width:100%; border-collapse:collapse; font-size:9.5pt; margin:.4em 0 1em; page-break-inside:auto; }
+  tr { page-break-inside:avoid; }
+  th { background:var(--head); color:#fff; text-align:left; padding:5px 8px; border:1px solid #bcdcc4; font-weight:bold; }
+  td { padding:5px 8px; border:1px solid var(--border); vertical-align:top; }
+  tbody tr:nth-child(even) td { background:var(--zebra); }
+  code, .mono { font-family:"SF Mono", Consolas, Menlo, monospace; font-size:9pt; }
+  pre { background:var(--zebra); border:1px solid var(--border); border-radius:6px; padding:8px 10px; font-family:"SF Mono",Consolas,Menlo,monospace; font-size:9pt; overflow-x:auto; white-space:pre-wrap; page-break-inside:avoid; }
+  .callout { border-left:4px solid #9a6700; background:#fff8e1; padding:8px 12px; margin:10px 0; border-radius:0 6px 6px 0; page-break-inside:avoid; }
+  .note { color:var(--muted); font-style:italic; font-size:9.5pt; }
+  .tools { color:var(--accent); font-style:italic; margin:0 0 6px; }
+  .check { list-style:none; padding-left:0; }
+  .check li { padding-left:1.5em; position:relative; }
+  .check li::before { content:"\2610"; position:absolute; left:0; color:var(--accent); }
+  /* cover */
+  .cover { height:235mm; display:flex; flex-direction:column; justify-content:center; page-break-after:always; }
+  .cover .kicker { color:var(--accent); font-weight:bold; letter-spacing:.08em; text-transform:uppercase; font-size:10pt; }
+  .cover h1 { font-size:30pt; border:none; margin:8px 0 6px; line-height:1.1; }
+  .cover .sub { font-size:15pt; color:var(--accent); margin:0 0 18px; }
+  .cover .lede { font-size:11pt; font-style:italic; max-width:60em; margin:0 0 22px; }
+  .cover .meta { font-size:10pt; color:var(--muted); margin:3px 0; }
+  .cover .meta strong { color:#1f2328; }
+  .toc ol { list-style:none; padding-left:0; }
+  .toc li { margin:.3em 0; font-size:11pt; }
+  .toc .n { color:var(--accent); font-weight:bold; display:inline-block; width:1.6em; }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="kicker">Capacity-Building Training</div>
+  <h1>Image Analysis for Plant Phenotyping</h1>
+  <div class="sub">A 5-Day Open-Source Intensive — Participant Guide</div>
+  <p class="lede">From raw image acquisition to 3D reconstruction: acquisition, segmentation, classical machine learning, deep learning, and 3D vision — built on an open-source-first toolchain, deliverable in-person or hybrid.</p>
+  <p class="meta"><strong>Live course site:</strong> <a href="https://jdetras.github.io/image-analysis-phenotyping-training/">jdetras.github.io/image-analysis-phenotyping-training</a></p>
+  <p class="meta"><strong>Duration:</strong> 5 days (~35 hours) &nbsp;·&nbsp; <strong>Format:</strong> in-person / hybrid &nbsp;·&nbsp; <strong>Cohort:</strong> 16–24 participants</p>
+  <p class="meta">Materials licensed CC BY 4.0 &nbsp;·&nbsp; Example code MIT</p>
+</div>
+
+<!-- TOC -->
+<div class="toc">
+  <h1>Contents</h1>
+  <ol>
+    <li><span class="n">1.</span> Course Overview</li>
+    <li><span class="n">2.</span> 5-Day Programme</li>
+    <li><span class="n">3.</span> Setup &amp; Pre-Arrival Checklist</li>
+    <li><span class="n">4.</span> Datasets, References &amp; Licensing</li>
+  </ol>
+</div>
+
+<!-- 1. OVERVIEW -->
+<div class="section">
+<h1>1 &nbsp; Course Overview</h1>
+
+<h2>Who this course is for</h2>
+<p>Researchers, technicians, graduate students, and breeding-program staff who collect plant images — from flatbed scans and growth-chamber cameras to field drones — and want to turn them into quantitative, analysis-ready traits. The course assumes:</p>
+<ul>
+  <li><strong>Basic Python literacy</strong> — you can read a script, run a function, and edit variables. A pre-course primer notebook is provided for refreshers.</li>
+  <li><strong>A scientific background in plant biology, agronomy, or breeding</strong> — or a computational background working alongside plant scientists.</li>
+  <li><strong>No prior computer-vision or deep-learning experience required.</strong> We build it up from first principles.</li>
+</ul>
+<p>Cohort size is tuned for 16–24 participants with one instructor and one teaching assistant, so everyone gets hands-on support during practicals.</p>
+
+<h2>Learning outcomes</h2>
+<p>By the end of the week, participants will be able to:</p>
+<ul>
+  <li><strong>Acquire &amp; manage</strong> — design an imaging protocol, control for illumination and scale, and organise datasets with reproducible metadata.</li>
+  <li><strong>Pre-process</strong> — apply denoising, colour-space transforms, and calibration so downstream measurements are robust and comparable.</li>
+  <li><strong>Segment</strong> — separate plant from background using thresholding, classical, and learned segmentation — and know when each fails.</li>
+  <li><strong>Quantify shape</strong> — extract morphometric traits (area, length, convex hull, skeleton, colour indices) and validate them against ground truth.</li>
+  <li><strong>Apply classical ML</strong> — engineer features and train interpretable classifiers/regressors for trait prediction and quality control.</li>
+  <li><strong>Train deep models</strong> — fine-tune CNNs, detectors (YOLO), and promptable segmenters (SAM) for counting, detection, and pixel labelling.</li>
+  <li><strong>Reconstruct in 3D</strong> — build point clouds and meshes via photogrammetry and measure volumetric/architectural traits.</li>
+  <li><strong>Work reproducibly</strong> — package an analysis in a versioned environment with notebooks, so a colleague can re-run it end to end.</li>
+</ul>
+
+<h2>Programme at a glance</h2>
+<p>Seven topics, woven across five days, with a cross-cutting <em>imaging, data &amp; practicals</em> thread running through every afternoon.</p>
+<table>
+  <thead><tr><th style="width:8%">Day</th><th style="width:27%">Theme</th><th style="width:37%">Core topics</th><th style="width:28%">Primary tools</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Acquisition &amp; image fundamentals</td><td>Imaging modalities, colour spaces, calibration, data management</td><td>scikit-image, OpenCV, Fiji</td></tr>
+    <tr><td>2</td><td>Noise, segmentation &amp; shape</td><td>Denoising, thresholding, morphology, morphometrics</td><td>scikit-image, PlantCV, napari</td></tr>
+    <tr><td>3</td><td>Classical machine learning</td><td>Feature engineering, classification, regression, pixel classifiers</td><td>scikit-learn, ilastik</td></tr>
+    <tr><td>4</td><td>Deep learning for phenotyping</td><td>CNNs, transfer learning, detection, promptable segmentation</td><td>PyTorch, YOLO, SAM</td></tr>
+    <tr><td>5</td><td>3D vision &amp; capstone</td><td>Photogrammetry, point clouds, meshes, mini-project</td><td>COLMAP/Meshroom, Open3D, CloudCompare</td></tr>
+  </tbody>
+</table>
+
+<h2>Format &amp; logistics</h2>
+<ul>
+  <li><strong>Daily rhythm</strong> — mornings are concept + guided demo (~3 h); afternoons are hands-on practicals on your own data or provided datasets (~3.5 h), with TA support.</li>
+  <li><strong>Delivery</strong> — in-person computer lab or hybrid via video + shared notebooks. All compute can run locally or on free Google Colab GPUs.</li>
+  <li><strong>Assessment</strong> — daily practical checkpoints plus a Day-5 capstone applied to a real phenotyping question. Optional certificate on completion.</li>
+</ul>
+</div>
+
+<!-- 2. PROGRAMME -->
+<div class="section">
+<h1>2 &nbsp; 5-Day Programme</h1>
+<p>Each day runs roughly 09:00–16:30 with a morning lecture/demo block, a long lunch, and an afternoon practical. Times are indicative — adjust to your timezone and breaks.</p>
+
+<h2>Day 1 — Acquisition &amp; image fundamentals</h2>
+<p class="tools">scikit-image · OpenCV · Fiji</p>
+<h3>Morning — concepts &amp; demo</h3>
+<ul>
+  <li><strong>Why imaging for phenotyping:</strong> traits, throughput, and the measurement chain from sensor to number.</li>
+  <li><strong>Imaging modalities:</strong> RGB, multispectral, thermal, chlorophyll fluorescence, depth — what each measures and its artefacts.</li>
+  <li><strong>How a digital image works:</strong> pixels, bit depth, channels, raw vs. compressed, EXIF metadata.</li>
+  <li><strong>Colour spaces:</strong> RGB → HSV, Lab, and excess-green (ExG) indices; why colour space choice makes or breaks segmentation.</li>
+  <li><strong>Calibration:</strong> colour cards, scale bars, flat-field correction, and fixing geometric distortion.</li>
+</ul>
+<h3>Afternoon — practical</h3>
+<ul>
+  <li>Load, inspect, and convert images with scikit-image and OpenCV; read pixel statistics and histograms.</li>
+  <li>Build a tidy dataset folder with a metadata CSV (plant ID, date, treatment, scale).</li>
+  <li>Open the same images in Fiji/ImageJ for interactive inspection and measurement.</li>
+  <li><strong>Checkpoint:</strong> convert a batch of raw images to a calibrated, scale-annotated working set.</li>
+</ul>
+
+<h2>Day 2 — Noise filtering, segmentation &amp; shape</h2>
+<p class="tools">scikit-image · PlantCV · napari</p>
+<h3>Morning — concepts &amp; demo</h3>
+<ul>
+  <li><strong>Noise &amp; denoising:</strong> Gaussian, median, bilateral, non-local means, and total-variation filters; when smoothing destroys signal.</li>
+  <li><strong>Thresholding:</strong> global (Otsu), adaptive/local, and multi-channel colour thresholding.</li>
+  <li><strong>Morphological operations:</strong> erosion, dilation, opening, closing, watershed for touching objects.</li>
+  <li><strong>Shape &amp; morphometrics:</strong> area, perimeter, convex hull, solidity, eccentricity, skeleton length, leaf count.</li>
+</ul>
+<h3>Afternoon — practical</h3>
+<ul>
+  <li>Build a classical segmentation pipeline in PlantCV for a rosette or seedling image set.</li>
+  <li>Interactively label and correct masks in napari.</li>
+  <li>Extract a morphometric trait table and plot trait distributions across treatments.</li>
+  <li><strong>Checkpoint:</strong> a reproducible mask-to-traits pipeline with a QC visual overlay.</li>
+</ul>
+
+<h2>Day 3 — Classical machine learning</h2>
+<p class="tools">scikit-learn · ilastik</p>
+<h3>Morning — concepts &amp; demo</h3>
+<ul>
+  <li><strong>From pixels to features:</strong> colour, texture (GLCM, LBP), and shape descriptors as model inputs.</li>
+  <li><strong>Supervised learning basics:</strong> train/validation/test splits, leakage, cross-validation, class imbalance.</li>
+  <li><strong>Models:</strong> logistic regression, SVM, random forests, gradient boosting — strengths and interpretability.</li>
+  <li><strong>Evaluation:</strong> accuracy vs. precision/recall/F1, confusion matrices, regression error metrics, calibration.</li>
+  <li><strong>Pixel classification:</strong> random-forest segmentation as a bridge to deep learning.</li>
+</ul>
+<h3>Afternoon — practical</h3>
+<ul>
+  <li>Engineer features from Day-2 masks and train a scikit-learn classifier (e.g. healthy vs. stressed).</li>
+  <li>Train an interactive pixel classifier in ilastik and compare it to threshold-based segmentation.</li>
+  <li>Run cross-validation and read the confusion matrix critically.</li>
+  <li><strong>Checkpoint:</strong> a validated trait classifier with an honest performance report.</li>
+</ul>
+
+<h2>Day 4 — Deep learning for phenotyping</h2>
+<p class="tools">PyTorch · YOLO · SAM</p>
+<h3>Morning — concepts &amp; demo</h3>
+<ul>
+  <li><strong>Neural network intuition:</strong> convolutions, feature maps, loss, backprop, overfitting — visually, not just mathematically.</li>
+  <li><strong>Transfer learning:</strong> why fine-tuning a pretrained CNN beats training from scratch on small phenotyping datasets.</li>
+  <li><strong>Task families:</strong> classification, object detection &amp; counting (YOLO), semantic/instance segmentation.</li>
+  <li><strong>Foundation models:</strong> the Segment Anything Model (SAM) for promptable, label-efficient segmentation.</li>
+  <li><strong>Annotation &amp; data:</strong> how much labelled data you really need, and augmentation strategies.</li>
+</ul>
+<h3>Afternoon — practical (GPU or Colab)</h3>
+<ul>
+  <li>Fine-tune a pretrained CNN in PyTorch for a phenotyping classification task.</li>
+  <li>Train/run a YOLO detector to count organs (e.g. spikes, fruits, leaves).</li>
+  <li>Use SAM to generate segmentation masks with minimal manual labelling.</li>
+  <li><strong>Checkpoint:</strong> a trained model with metrics, plus inference on held-out images.</li>
+</ul>
+<div class="callout"><strong>No GPU?</strong> The full afternoon runs on free Google Colab GPUs — see §3 Hardware requirements.</div>
+
+<h2>Day 5 — 3D vision &amp; capstone</h2>
+<p class="tools">COLMAP/Meshroom · Open3D · CloudCompare</p>
+<h3>Morning — concepts &amp; demo</h3>
+<ul>
+  <li><strong>3D phenotyping motivation:</strong> traits you can't get from 2D — volume, canopy architecture, self-occlusion.</li>
+  <li><strong>Photogrammetry / structure-from-motion:</strong> from a turntable image set to a point cloud with COLMAP or Meshroom.</li>
+  <li><strong>Point-cloud processing:</strong> registration, downsampling, normals, meshing in Open3D.</li>
+  <li><strong>Measurement &amp; QC:</strong> volume, height, leaf-area estimates and visual inspection in CloudCompare.</li>
+  <li><strong>Field scale:</strong> a brief look at drone orthomosaics and plot extraction in QGIS (commercial equivalents noted).</li>
+</ul>
+<h3>Afternoon — capstone</h3>
+<ul>
+  <li>Apply any part of the week's toolkit to a phenotyping question on your own or a provided dataset.</li>
+  <li>Package the analysis as a reproducible notebook + environment.</li>
+  <li>Short show-and-tell: each participant presents one result and one thing that surprised them.</li>
+  <li><strong>Checkpoint:</strong> capstone notebook submitted for the optional certificate.</li>
+</ul>
+
+<h2>Mapping to the seven topics</h2>
+<table>
+  <thead><tr><th style="width:8%">#</th><th style="width:52%">Topic</th><th style="width:40%">Where it lives</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Image acquisition</td><td>Day 1</td></tr>
+    <tr><td>2</td><td>Noise filtering</td><td>Day 2 (morning)</td></tr>
+    <tr><td>3</td><td>Segmentation</td><td>Day 2–3 (classical → learned)</td></tr>
+    <tr><td>4</td><td>Shape analysis / morphometrics</td><td>Day 2 (afternoon)</td></tr>
+    <tr><td>5</td><td>Classical machine learning</td><td>Day 3</td></tr>
+    <tr><td>6</td><td>Deep learning</td><td>Day 4</td></tr>
+    <tr><td>7</td><td>3D vision</td><td>Day 5</td></tr>
+    <tr><td>—</td><td>Imaging, data &amp; practicals (cross-cutting)</td><td>Every afternoon</td></tr>
+  </tbody>
+</table>
+
+<h2>Assessment &amp; certification</h2>
+<ul>
+  <li><strong>Daily checkpoints (60%)</strong> — one short practical deliverable per day, reviewed by the TA.</li>
+  <li><strong>Capstone (40%)</strong> — a reproducible notebook answering a phenotyping question, presented on Day 5.</li>
+  <li><strong>Certificate of completion</strong> issued to participants who attend ≥80% and submit the capstone.</li>
+</ul>
+</div>
+
+<!-- 3. SETUP -->
+<div class="section">
+<h1>3 &nbsp; Setup &amp; Pre-Arrival Checklist</h1>
+<div class="callout"><strong>Do this at least 3 days before Day 1.</strong> Installing on conference Wi-Fi on the morning of the course never ends well.</div>
+<ul class="check">
+  <li>Install <a href="https://github.com/conda-forge/miniforge#install">Miniforge</a> (conda + the conda-forge channel; includes the fast <span class="mono">mamba</span> solver).</li>
+  <li>Download the course repository (<span class="mono">git clone</span> or "Download ZIP").</li>
+  <li>Create the environment: <span class="mono">conda env create -f env/environment.yml</span></li>
+  <li>Activate it: <span class="mono">conda activate phenotyping</span></li>
+  <li>Run the verifier: <span class="mono">python notebooks/00_check_environment.py</span> — every required line should read <span class="mono">[ ok ]</span>.</li>
+  <li>Install the GUI apps you'll use (Fiji, ilastik — see the table below).</li>
+  <li>Create a free <a href="https://colab.research.google.com/">Google Colab</a> account as the Day-4 GPU fallback.</li>
+  <li>(Optional) Bring a small set of your own plant images to use in the practicals.</li>
+</ul>
+
+<h2>Install the Python environment</h2>
+<p>The repository ships a conda <span class="mono">environment.yml</span> for a one-command setup (use <span class="mono">mamba</span> in place of <span class="mono">conda</span> for a faster solve):</p>
+<pre>git clone https://github.com/jdetras/image-analysis-phenotyping-training.git
+cd image-analysis-phenotyping-training
+conda env create -f env/environment.yml
+conda activate phenotyping
+python notebooks/00_check_environment.py</pre>
+<p class="note">NVIDIA GPU users: the environment installs the CPU build of PyTorch so it works everywhere. After creating the env, install the CUDA build matching your driver from pytorch.org/get-started/locally. No conda? A requirements.txt is provided for a plain virtualenv or Colab — always create a virtualenv first.</p>
+
+<h2>Software stack — Python / command-line</h2>
+<p>These install via the environment file above. Licenses summarised; confirm against each project before redistribution.</p>
+<table>
+  <thead><tr><th style="width:22%">Tool</th><th style="width:46%">Role in the course</th><th style="width:14%">License</th><th style="width:18%">Source</th></tr></thead>
+  <tbody>
+    <tr><td>scikit-image</td><td>Core image processing — filters, segmentation, morphometrics</td><td>BSD-3</td><td>scikit-image.org</td></tr>
+    <tr><td>OpenCV</td><td>Fast image I/O, transforms, classical CV ops</td><td>Apache-2.0</td><td>opencv.org</td></tr>
+    <tr><td>PlantCV</td><td>Plant-specific phenotyping pipelines &amp; trait extraction</td><td>MIT</td><td>plantcv.org</td></tr>
+    <tr><td>scikit-learn</td><td>Classical ML — classifiers, regressors, cross-validation</td><td>BSD-3</td><td>scikit-learn.org</td></tr>
+    <tr><td>PyTorch</td><td>Deep learning framework (CNNs, transfer learning)</td><td>BSD-3</td><td>pytorch.org</td></tr>
+    <tr><td>torchvision</td><td>Pretrained models, datasets, image transforms</td><td>BSD-3</td><td>pytorch.org/vision</td></tr>
+    <tr><td>Ultralytics (YOLO)</td><td>Object detection &amp; counting of plant organs</td><td>AGPL-3.0</td><td>github.com/ultralytics</td></tr>
+    <tr><td>Segment Anything (SAM)</td><td>Promptable, label-efficient segmentation</td><td>Apache-2.0</td><td>github.com/facebookresearch</td></tr>
+    <tr><td>Open3D</td><td>Point-cloud &amp; mesh processing for 3D phenotyping</td><td>MIT</td><td>open3d.org</td></tr>
+    <tr><td>JupyterLab</td><td>Notebook environment for all practicals</td><td>BSD-3</td><td>jupyter.org</td></tr>
+  </tbody>
+</table>
+
+<h2>Software stack — GUI applications</h2>
+<p>Install these manually from the official download pages. They cover interactive inspection, labelling, and 3D work where a point-and-click tool beats a script.</p>
+<table>
+  <thead><tr><th style="width:20%">App</th><th style="width:48%">Role in the course</th><th style="width:14%">License</th><th style="width:18%">Download</th></tr></thead>
+  <tbody>
+    <tr><td>Fiji / ImageJ</td><td>Interactive image inspection &amp; measurement (Day 1–2)</td><td>GPL / PD</td><td>fiji.sc</td></tr>
+    <tr><td>napari</td><td>n-D image viewer &amp; manual mask correction (Day 2)</td><td>BSD-3</td><td>napari.org</td></tr>
+    <tr><td>ilastik</td><td>Interactive random-forest pixel classification (Day 3)</td><td>GPL-2.0+</td><td>ilastik.org</td></tr>
+    <tr><td>CloudCompare</td><td>Point-cloud inspection &amp; measurement (Day 5)</td><td>GPL</td><td>cloudcompare.org</td></tr>
+    <tr><td>Meshroom</td><td>GUI photogrammetry / structure-from-motion (Day 5)</td><td>MPL-2.0</td><td>alicevision.org</td></tr>
+    <tr><td>COLMAP</td><td>Structure-from-motion / multi-view stereo (Day 5)</td><td>BSD-3</td><td>colmap.github.io</td></tr>
+    <tr><td>QGIS</td><td>Drone orthomosaics &amp; plot extraction (Day 5)</td><td>GPL-2.0+</td><td>qgis.org</td></tr>
+  </tbody>
+</table>
+<p class="note">Open-source-first: where teams already license commercial tools, the common equivalents are Pix4D / Agisoft Metashape (→ COLMAP/Meshroom + QGIS) and MATLAB + Image Processing Toolbox (→ scikit-image / OpenCV). These are noted but not used in practicals.</p>
+
+<h2>Hardware requirements</h2>
+<table>
+  <thead><tr><th style="width:20%">Component</th><th style="width:40%">Minimum</th><th style="width:40%">Recommended</th></tr></thead>
+  <tbody>
+    <tr><td>CPU</td><td>4 cores</td><td>8+ cores</td></tr>
+    <tr><td>RAM</td><td>8 GB</td><td>16–32 GB (3D &amp; large images)</td></tr>
+    <tr><td>Disk</td><td>20 GB free</td><td>50 GB free (datasets + models)</td></tr>
+    <tr><td>GPU</td><td>None — use Colab for Day 4</td><td>NVIDIA GPU ≥6 GB VRAM for local DL</td></tr>
+    <tr><td>OS</td><td>Windows 10+, macOS 12+, or Linux</td><td>Linux or macOS for smoothest 3D tooling</td></tr>
+  </tbody>
+</table>
+<p class="note">No-GPU path: Days 1–3 and the Day-5 3D work run comfortably on CPU. Only the Day-4 deep-learning practical benefits from a GPU — and that runs end-to-end on free Google Colab GPUs, so a modest laptop is enough to complete the whole course.</p>
+</div>
+
+<!-- 4. RESOURCES -->
+<div class="section">
+<h1>4 &nbsp; Datasets, References &amp; Licensing</h1>
+
+<h2>Datasets</h2>
+<p>Open phenotyping datasets used in demos and available for practicals. Always check each dataset's own license and citation requirements before reuse or redistribution.</p>
+<table>
+  <thead><tr><th style="width:38%">Dataset</th><th style="width:30%">Used for</th><th style="width:32%">Source</th></tr></thead>
+  <tbody>
+    <tr><td>CVPPP — leaf segmentation &amp; counting</td><td>Day 2–4: segmentation, counting</td><td>plant-phenotyping.org/datasets</td></tr>
+    <tr><td>PlantVillage — leaf disease images</td><td>Day 3–4: classification</td><td>github.com/spMohanty/PlantVillage-Dataset</td></tr>
+    <tr><td>Global Wheat Head Detection (GWHD)</td><td>Day 4: detection &amp; counting</td><td>global-wheat.com</td></tr>
+    <tr><td>PlantCV tutorial datasets</td><td>Day 2: classical pipelines</td><td>plantcv.readthedocs.io</td></tr>
+    <tr><td>Pheno4D — 4D plant point clouds</td><td>Day 5: 3D processing</td><td>ipb.uni-bonn.de/data/pheno4d</td></tr>
+    <tr><td>Your own images</td><td>Capstone</td><td>Bring a small set on Day 1</td></tr>
+  </tbody>
+</table>
+<p class="note">Bandwidth tip: hosts should mirror the chosen datasets to a local drive before the course — several are multi-GB and venue Wi-Fi rarely copes with 20 people downloading at once.</p>
+
+<h2>Key references</h2>
+<ul>
+  <li>Gehan et al. (2017). PlantCV v2: Image analysis software for high-throughput plant phenotyping. <em>PeerJ.</em> doi:10.7717/peerj.4088</li>
+  <li>van der Walt et al. (2014). scikit-image: image processing in Python. <em>PeerJ.</em> doi:10.7717/peerj.453</li>
+  <li>Kirillov et al. (2023). Segment Anything. <em>ICCV.</em> arXiv:2304.02643</li>
+  <li>David et al. (2020). Global Wheat Head Detection (GWHD) dataset. <em>Plant Phenomics.</em> doi:10.34133/2020/3521852</li>
+  <li>Minervini et al. (2016). Finely-grained annotated datasets for image-based plant phenotyping. <em>Pattern Recognition Letters.</em> doi:10.1016/j.patrec.2015.10.013</li>
+  <li>Paulus (2019). Measuring crops in 3D: using geometry for plant phenotyping. <em>Plant Methods.</em> doi:10.1186/s13007-019-0490-0</li>
+</ul>
+
+<h2>Licensing</h2>
+<p>Course materials (text, slides, notebooks, and the website) are released under Creative Commons Attribution 4.0 (CC BY 4.0); the example code is additionally available under the MIT License. Every referenced tool retains its own license. Two points warrant attention for organisations:</p>
+<ul>
+  <li><strong>Ultralytics YOLO is AGPL-3.0.</strong> Fine for training, research, and teaching, but using it inside a closed-source product can trigger copyleft obligations — evaluate before embedding it in proprietary pipelines.</li>
+  <li><strong>Fiji, ilastik, CloudCompare, QGIS</strong> are GPL-family — free to use and share; distributed modifications must stay open. SAM, Open3D, PlantCV, scikit-image, scikit-learn, PyTorch, and OpenCV are permissive (Apache-2.0 / BSD / MIT).</li>
+</ul>
+<p class="note">Not legal advice. License summaries are provided in good faith for planning; confirm current terms on each project's site before redistributing software or building commercial products.</p>
+
+<h2>Host / instructor checklist</h2>
+<ul class="check">
+  <li>Test the full environment install on each target OS one week ahead.</li>
+  <li>Pre-download model weights (YOLO, SAM) and datasets onto a shared drive as a Wi-Fi fallback.</li>
+  <li>Confirm Colab access works on the venue network (some institutional firewalls block it).</li>
+  <li>Share the pre-arrival checklist with participants 1–2 weeks ahead.</li>
+  <li>Reserve a room with reliable power outlets at every seat.</li>
+  <li>Recruit one TA per ~12 participants for afternoon practicals.</li>
+</ul>
+</div>
+
+</body>
+</html>

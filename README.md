@@ -20,6 +20,8 @@ open-source-first toolchain, deliverable in-person or hybrid.
 | `env/requirements.txt` | pip fallback (virtualenv / Google Colab) |
 | `notebooks/00_check_environment.py` | Verifies the install; usable in CI |
 | `.nojekyll` | Tells GitHub Pages to serve HTML as-is (no Jekyll build) |
+| `dist/…Participant-Guide.pdf` / `.docx` | Formal, printable participant guide (PDF + Word) |
+| `build/` | Sources that generate the guide (`build_docx.js`, `print-guide.html`) |
 
 ## Course structure
 
