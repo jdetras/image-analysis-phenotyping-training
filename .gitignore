@@ -16,3 +16,4 @@ data/
 *.ply
 *.las
 models/
+build/docker-build*.log
